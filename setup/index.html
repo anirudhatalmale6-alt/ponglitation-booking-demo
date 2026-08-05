@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PongLiTation — Go-Live Setup Guide</title>
+<link rel="icon" type="image/png" href="../favicon.png" />
+<style>
+:root{--ink:#2c2b28;--brand:#5f7350;--sage:#a9bd97;--tan:#c39a76;--muted:#7a776d;--line:#e8e3d7;--cream:#f6f4f0;--soft:#f5f2ea}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--cream);line-height:1.6}
+.wrap{max-width:760px;margin:0 auto;padding:34px 20px 70px}
+h1{font-family:Sora,sans-serif;font-size:2rem;letter-spacing:-.02em;margin-bottom:6px}
+.eyebrow{font-family:Sora,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--brand);margin-bottom:10px}
+.lead{color:var(--muted);font-size:1.05rem;margin-bottom:26px}
+.part{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px 26px 20px;margin-bottom:22px;box-shadow:0 10px 40px rgba(44,43,40,.06)}
+.part h2{font-family:Sora,sans-serif;font-size:1.3rem;display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.badge{width:34px;height:34px;flex:0 0 auto;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font-family:Sora,sans-serif;font-weight:700;font-size:.95rem}
+.time{font-size:.8rem;color:var(--muted);margin-bottom:16px}
+ol{margin:0 0 6px 4px;padding-left:20px}
+ol li{margin-bottom:12px}
+.val{display:inline-block;background:var(--soft);border:1px solid var(--line);border-radius:7px;padding:2px 9px;font-family:ui-monospace,Menlo,monospace;font-size:.9rem;color:var(--ink);word-break:break-all}
+.note{background:rgba(169,189,151,.16);border:1px solid rgba(169,189,151,.5);border-radius:11px;padding:12px 15px;font-size:.9rem;margin-top:14px}
+.tip{color:var(--muted);font-size:.88rem;margin-top:4px}
+a{color:var(--brand);font-weight:600}
+.done{background:var(--ink);color:#fff;border-radius:18px;padding:24px 26px;margin-top:8px}
+.done h2{font-family:Sora,sans-serif;font-size:1.2rem;margin-bottom:8px}
+.done p{color:#d9d6cd;font-size:.95rem}
+.done .val{background:#3a3934;border-color:#4a493f;color:#fff}
+table{width:100%;border-collapse:collapse;font-size:.92rem;margin-top:8px}
+td{padding:7px 8px;border-bottom:1px solid var(--line)}
+td:first-child{color:var(--muted);width:42%}
+kbd{background:var(--ink);color:#fff;border-radius:5px;padding:1px 7px;font-family:ui-monospace,monospace;font-size:.82rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">PongLiTation · Go-Live</div>
+  <h1>Let's get you online 🌱</h1>
+  <p class="lead">Two quick steps and your booking site is live. It's mostly copy-and-paste — I've written out every value for you. Total time: about 15 minutes. When you're done, just send me the one link at the bottom and I take over from there.</p>
+
+  <div class="part">
+    <h2><span class="badge">1</span> Grab your domain</h2>
+    <div class="time">≈ 5 minutes · one-time ~$11/year</div>
+    <ol>
+      <li>Go to <a href="https://www.namecheap.com" target="_blank">namecheap.com</a>.</li>
+      <li>In the search box, type <span class="val">ponglitation.com</span> and search.</li>
+      <li>It should show as available — click <b>Add to Cart</b>, then <b>Checkout</b>.</li>
+      <li>Create your account and pay (about $11 for the year). You can skip any add-ons they offer — you don't need them.</li>
+    </ol>
+    <div class="note">That's it for the domain — you now own <b>ponglitation.com</b>. We'll point it at your site in the next step together; nothing more to do here right now.</div>
+  </div>
+
+  <div class="part">
+    <h2><span class="badge">2</span> Create your hosting (free)</h2>
+    <div class="time">≈ 10 minutes · free to start</div>
+    <ol>
+      <li>Go to <a href="https://render.com" target="_blank">render.com</a> and click <b>Get Started</b>. Sign up with your email or Google (it's free).</li>
+      <li>On your dashboard, click <b>New +</b> (top right) → <b>Web Service</b>.</li>
+      <li>Choose <b>“Public Git Repository”</b> and paste this into the box:<br>
+        <span class="val">https://github.com/anirudhatalmale6-alt/ponglitation-booking-demo</span><br>then click <b>Connect</b>.</li>
+      <li>It'll show a settings form. Fill it in exactly like this:
+        <table>
+          <tr><td>Name</td><td><span class="val">ponglitation</span></td></tr>
+          <tr><td>Root Directory</td><td><span class="val">backend</span></td></tr>
+          <tr><td>Build Command</td><td><span class="val">npm install</span></td></tr>
+          <tr><td>Start Command</td><td><span class="val">npm start</span></td></tr>
+          <tr><td>Instance Type</td><td><b>Free</b></td></tr>
+        </table>
+      </li>
+      <li>Scroll down to <b>Environment Variables</b> → click <b>Add Environment Variable</b> and enter:
+        <table>
+          <tr><td>Key</td><td><span class="val">ADMIN_PASSWORD</span></td></tr>
+          <tr><td>Value</td><td>a password you choose (this logs you into your dashboard — pick something you'll remember)</td></tr>
+        </table>
+      </li>
+      <li>Click <b>Create Web Service</b> at the bottom. Give it 2–3 minutes to build — you'll see logs scroll, then “Live”. 🎉</li>
+    </ol>
+    <div class="note">At the top of that page you'll see your new web address — it looks like <span class="val">https://ponglitation.onrender.com</span>. <b>That's your live site!</b> Copy that link.</div>
+  </div>
+
+  <div class="done">
+    <h2>Last step — send me the link 📩</h2>
+    <p>Message me your <span class="val">…onrender.com</span> link (and confirm the domain's bought). Then I'll:</p>
+    <p style="margin-top:10px">• connect <b>ponglitation.com</b> to it &nbsp; • set up your <b>hello@ponglitation.com</b> emails &nbsp; • switch it to always-on so it's instant &nbsp; • test everything end to end.</p>
+    <p style="margin-top:12px">You'll be fully live within a day. If you get stuck on any step, just tell me where — happy to walk you through it.</p>
+  </div>
+
+  <p class="tip" style="margin-top:20px">Note: the free hosting is perfect to launch on. Once bookings start rolling in, I'll move you to an always-on plan (a few dollars a month) so it's instant for every visitor and your bookings are stored permanently — I'll set that up when you're ready.</p>
+</div>
+</body>
+</html>
