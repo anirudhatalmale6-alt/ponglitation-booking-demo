@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PongLiTation — Book Motivational Sessions & Table-Tennis Lessons</title>
+<meta name="description" content="Book motivational sessions and table-tennis lessons with PongLiTation. Real-time availability, instant confirmations, and automated reminders. Serving students and corporate teams across the U.S." />
+<meta name="keywords" content="table tennis lessons, ping pong coaching, motivational speaker, corporate team building, book clubs, motivational groups" />
+<meta property="og:title" content="PongLiTation — Play. Grow. Win." />
+<meta property="og:description" content="Motivational sessions and table-tennis lessons. Book online in a few clicks." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SportsActivityLocation",
+  "name": "PongLiTation",
+  "description": "Motivational sessions and table-tennis lessons for individuals and corporate teams.",
+  "areaServed": "United States",
+  "priceRange": "$$"
+}
+</script>
+<style>
+:root{
+  /* --- BRAND TOKENS (swap these for the real logo palette) --- */
+  --ink:#0e1116;
+  --paper:#ffffff;
+  --brand:#ff5a3c;       /* energetic paddle-orange */
+  --brand-2:#12b886;     /* table-green */
+  --accent:#ffd43b;      /* ball-yellow */
+  --muted:#5b6472;
+  --line:#e7e9ee;
+  --soft:#f5f6f8;
+  --radius:16px;
+  --shadow:0 10px 40px rgba(14,17,22,.08);
+  --shadow-lg:0 24px 70px rgba(14,17,22,.16);
+  --font:'Inter',system-ui,sans-serif;
+  --display:'Sora','Inter',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--ink);background:var(--paper);line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.1;letter-spacing:-.02em}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:1140px;margin:0 auto;padding:0 22px}
+.btn{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--display);font-weight:700;font-size:1rem;border:none;cursor:pointer;border-radius:999px;padding:.85rem 1.5rem;transition:transform .15s ease,box-shadow .15s ease,background .2s}
+.btn-primary{background:var(--brand);color:#fff;box-shadow:0 8px 24px rgba(255,90,60,.35)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(255,90,60,.45)}
+.btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn-ghost:hover{border-color:var(--ink)}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-dark:hover{transform:translateY(-2px)}
+.eyebrow{font-family:var(--display);font-weight:700;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--brand)}
+
+/* header */
+header{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);background:rgba(255,255,255,.82);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+.logo{display:flex;align-items:center;gap:.6rem;font-family:var(--display);font-weight:800;font-size:1.25rem}
+.logo .mark{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--brand),var(--accent));display:grid;place-items:center;color:#fff;font-size:1.2rem;box-shadow:0 6px 18px rgba(255,90,60,.35)}
+.logo .mark span{transform:rotate(-8deg)}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{font-weight:500;color:var(--muted);font-size:.95rem}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{display:flex;gap:.6rem;align-items:center}
+.menu-btn{display:none;background:none;border:none;font-size:1.5rem;cursor:pointer}
+
+/* hero */
+.hero{position:relative;overflow:hidden;padding:76px 0 88px}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(1200px 500px at 80% -10%,rgba(255,212,59,.28),transparent 60%),radial-gradient(900px 500px at 0% 110%,rgba(18,182,134,.18),transparent 55%);z-index:-1}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(2.4rem,5vw,3.8rem);font-weight:800}
+.hero h1 .hl{color:var(--brand)}
+.hero p.lead{font-size:1.18rem;color:var(--muted);margin:1.2rem 0 1.9rem;max-width:34ch}
+.hero-cta{display:flex;gap:.8rem;flex-wrap:wrap}
+.trust{display:flex;gap:1.6rem;margin-top:2.2rem;flex-wrap:wrap}
+.trust div{display:flex;flex-direction:column}
+.trust b{font-family:var(--display);font-size:1.5rem}
+.trust span{font-size:.82rem;color:var(--muted)}
+.hero-card{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow-lg);padding:26px;transform:rotate(1.2deg)}
+.hero-card .hc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.hero-card .hc-badge{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--soft);color:var(--brand-2);padding:.3rem .6rem;border-radius:6px}
+.mini-slot{display:flex;justify-content:space-between;align-items:center;padding:.75rem .9rem;border:1px solid var(--line);border-radius:12px;margin-bottom:.55rem;font-size:.92rem}
+.mini-slot.on{border-color:var(--brand);background:rgba(255,90,60,.06)}
+.mini-slot .dot{width:8px;height:8px;border-radius:50%;background:var(--brand-2);display:inline-block;margin-right:.5rem}
+.mini-slot.off{opacity:.45}
+
+/* generic section */
+section.pad{padding:84px 0}
+.sec-head{text-align:center;max-width:620px;margin:0 auto 52px}
+.sec-head h2{font-size:clamp(1.9rem,3.6vw,2.7rem);margin:.5rem 0}
+.sec-head p{color:var(--muted);font-size:1.05rem}
+
+/* services */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
+.card .ic{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-size:1.5rem;margin-bottom:16px}
+.card h3{font-size:1.3rem;margin-bottom:.5rem}
+.card p{color:var(--muted);font-size:.95rem;flex:1}
+.card .price{font-family:var(--display);font-weight:800;font-size:1.6rem;margin:1rem 0 .3rem}
+.card .price small{font-size:.85rem;font-weight:500;color:var(--muted)}
+.card .btn{margin-top:1rem;width:100%;justify-content:center}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:.25rem .55rem;border-radius:6px;margin-bottom:12px}
+
+/* how it works */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.step{text-align:center}
+.step .n{width:46px;height:46px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-family:var(--display);font-weight:700;margin:0 auto 14px}
+.step h4{font-size:1.05rem;margin-bottom:.35rem}
+.step p{color:var(--muted);font-size:.9rem}
+
+/* corporate band */
+.band{background:var(--ink);color:#fff;border-radius:26px;padding:52px;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center;overflow:hidden;position:relative}
+.band::after{content:"";position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,212,59,.25),transparent 70%)}
+.band h2{font-size:2.2rem;margin-bottom:.7rem}
+.band p{color:#c7ccd6;font-size:1.02rem}
+.band ul{list-style:none;margin-top:1.2rem;display:flex;flex-direction:column;gap:.6rem}
+.band li{display:flex;gap:.6rem;align-items:center;font-size:.98rem}
+.band li::before{content:"●";color:var(--accent)}
+
+/* dashboard preview */
+.dash{display:grid;grid-template-columns:.9fr 1.1fr;gap:44px;align-items:center}
+.dash-ui{background:var(--soft);border:1px solid var(--line);border-radius:18px;padding:18px}
+.dash-ui .bar{display:flex;gap:.5rem;margin-bottom:14px}
+.dash-ui .bar i{width:11px;height:11px;border-radius:50%;background:var(--line)}
+.dash-row{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid var(--line);border-radius:10px;padding:.7rem .9rem;margin-bottom:.5rem;font-size:.9rem}
+.dash-row .toggle{width:38px;height:22px;border-radius:999px;background:var(--brand-2);position:relative}
+.dash-row .toggle::after{content:"";position:absolute;width:16px;height:16px;border-radius:50%;background:#fff;top:3px;right:3px}
+.feat{display:flex;gap:.8rem;margin-bottom:1.1rem}
+.feat .fic{flex:0 0 auto;width:38px;height:38px;border-radius:10px;background:rgba(255,90,60,.1);color:var(--brand);display:grid;place-items:center;font-size:1.1rem}
+.feat h4{font-size:1.05rem;margin-bottom:.15rem}
+.feat p{color:var(--muted);font-size:.92rem}
+
+/* footer */
+footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30px;margin-top:20px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:30px;margin-bottom:34px}
+.foot-grid p{color:var(--muted);font-size:.92rem;max-width:34ch;margin-top:.8rem}
+.foot-grid h5{font-family:var(--display);font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
+.foot-grid a{display:block;color:var(--ink);font-size:.94rem;margin-bottom:.5rem;opacity:.85}
+.foot-bottom{border-top:1px solid var(--line);padding-top:22px;display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted);flex-wrap:wrap;gap:10px}
+
+/* ---------- BOOKING MODAL ---------- */
+.overlay{position:fixed;inset:0;background:rgba(14,17,22,.55);backdrop-filter:blur(4px);z-index:100;display:none;align-items:center;justify-content:center;padding:18px}
+.overlay.open{display:flex}
+.modal{background:#fff;border-radius:22px;width:100%;max-width:540px;max-height:92vh;overflow:auto;box-shadow:var(--shadow-lg)}
+.modal-head{padding:22px 26px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;z-index:2}
+.modal-head h3{font-size:1.2rem}
+.modal-head .close{background:var(--soft);border:none;width:34px;height:34px;border-radius:50%;font-size:1.1rem;cursor:pointer}
+.modal-body{padding:24px 26px}
+.progress{display:flex;gap:6px;margin-bottom:22px}
+.progress i{height:5px;flex:1;border-radius:3px;background:var(--line)}
+.progress i.on{background:var(--brand)}
+.step-title{font-family:var(--display);font-weight:700;font-size:1.05rem;margin-bottom:2px}
+.step-sub{color:var(--muted);font-size:.9rem;margin-bottom:18px}
+.opt{border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:.7rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:border .15s,background .15s}
+.opt:hover{border-color:var(--brand)}
+.opt.sel{border-color:var(--brand);background:rgba(255,90,60,.06)}
+.opt b{font-family:var(--display)}
+.opt small{color:var(--muted);display:block;font-size:.82rem;margin-top:2px}
+.opt .p{font-family:var(--display);font-weight:700;color:var(--brand)}
+.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.cal-head button{background:var(--soft);border:none;width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:1rem}
+.cal-head b{font-family:var(--display)}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.cal .dow{text-align:center;font-size:.72rem;color:var(--muted);font-weight:600;padding:4px 0}
+.cal .day{aspect-ratio:1;display:grid;place-items:center;border-radius:9px;font-size:.9rem;cursor:pointer;border:1px solid transparent}
+.cal .day.muted{color:var(--line);cursor:default}
+.cal .day.dis{color:#c3c8d1;cursor:not-allowed;text-decoration:line-through}
+.cal .day.avail:hover{background:var(--soft)}
+.cal .day.sel{background:var(--brand);color:#fff;font-weight:700}
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px}
+.slot{border:1.5px solid var(--line);border-radius:10px;padding:.6rem;text-align:center;font-size:.88rem;cursor:pointer;font-weight:600}
+.slot:hover{border-color:var(--brand)}
+.slot.sel{background:var(--brand);color:#fff;border-color:var(--brand)}
+.slot.taken{opacity:.35;text-decoration:line-through;cursor:not-allowed}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:.85rem;font-weight:600;margin-bottom:5px}
+.field input,.field textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:.7rem .85rem;font-family:inherit;font-size:.95rem}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--brand)}
+.summary{background:var(--soft);border-radius:12px;padding:14px 16px;margin-bottom:16px;font-size:.92rem}
+.summary div{display:flex;justify-content:space-between;padding:3px 0}
+.summary div b{font-family:var(--display)}
+.modal-foot{display:flex;gap:.7rem;padding:18px 26px;border-top:1px solid var(--line);position:sticky;bottom:0;background:#fff}
+.modal-foot .btn{flex:1;justify-content:center}
+.confirm{text-align:center;padding:20px 6px}
+.confirm .check{width:74px;height:74px;border-radius:50%;background:var(--brand-2);color:#fff;display:grid;place-items:center;font-size:2.2rem;margin:0 auto 18px;animation:pop .4s ease}
+@keyframes pop{0%{transform:scale(.4);opacity:0}100%{transform:scale(1);opacity:1}}
+.confirm h3{font-size:1.5rem;margin-bottom:.5rem}
+.confirm p{color:var(--muted);margin-bottom:6px}
+.email-preview{text-align:left;border:1px solid var(--line);border-radius:12px;margin-top:18px;overflow:hidden}
+.email-preview .eh{background:var(--soft);padding:10px 14px;font-size:.78rem;color:var(--muted);border-bottom:1px solid var(--line)}
+.email-preview .eb{padding:14px;font-size:.88rem}
+.email-preview .eb b{font-family:var(--display)}
+.notice{background:rgba(255,212,59,.16);border:1px solid rgba(255,212,59,.5);color:#7a5c00;font-size:.82rem;padding:.7rem .9rem;border-radius:10px;text-align:center}
+
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:36px}
+  .cards{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .band{grid-template-columns:1fr;padding:34px}
+  .dash{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .menu-btn{display:block}
+}
+@media(max-width:520px){
+  .steps{grid-template-columns:1fr}
+  .slots{grid-template-columns:repeat(2,1fr)}
+  .trust{gap:1.1rem}
+  .nav .btn-primary{padding:.6rem 1rem;font-size:.9rem}
+  .logo{font-size:1.1rem}
+  .logo .mark{width:34px;height:34px}
+}
+.demo-ribbon{position:fixed;bottom:14px;left:14px;z-index:60;background:var(--ink);color:#fff;font-size:.78rem;padding:.5rem .8rem;border-radius:999px;box-shadow:var(--shadow);opacity:.9}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top"><span class="mark"><span>🏓</span></span> PongLiTation</a>
+    <nav class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#how">How it works</a>
+      <a href="#corporate">Corporate</a>
+      <a href="#manage">Dashboard</a>
+    </nav>
+    <div class="nav-cta">
+      <button class="btn btn-primary" onclick="openBooking()">Book now</button>
+      <button class="menu-btn" onclick="document.querySelector('.nav-links').style.display='flex'">☰</button>
+    </div>
+  </div>
+</header>
+
+<a id="top"></a>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Play · Grow · Win</span>
+      <h1>Book a session that <span class="hl">moves you forward.</span></h1>
+      <p class="lead">Motivational sessions and table-tennis lessons — booked online in a few clicks, with instant confirmations and automatic reminders.</p>
+      <div class="hero-cta">
+        <button class="btn btn-primary" onclick="openBooking()">Book a session →</button>
+        <a class="btn btn-ghost" href="#services">View services</a>
+      </div>
+      <div class="trust">
+        <div><b>60 min</b><span>1-on-1 lessons</span></div>
+        <div><b>Mon–Fri</b><span>Flexible slots</span></div>
+        <div><b>0 emails</b><span>Fully automated</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="hero-card">
+        <div class="hc-top">
+          <b style="font-family:var(--display)">Tue, Aug 11</b>
+          <span class="hc-badge">Live availability</span>
+        </div>
+        <div class="mini-slot on"><span><span class="dot"></span>9:00 AM · Table-Tennis Lesson</span><b>$70</b></div>
+        <div class="mini-slot"><span><span class="dot"></span>11:00 AM · Motivational Session</span><b>Book</b></div>
+        <div class="mini-slot off"><span>1:00 PM · Booked</span><span>—</span></div>
+        <div class="mini-slot"><span><span class="dot"></span>3:00 PM · Book Club</span><b>Book</b></div>
+        <button class="btn btn-dark" style="width:100%;justify-content:center;margin-top:8px" onclick="openBooking()">Reserve your slot</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pad" id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">What we offer</span>
+      <h2>Pick your session</h2>
+      <p>Every booking sends an instant confirmation and an automatic reminder before your session — no follow-up needed.</p>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="ic" style="background:rgba(255,90,60,.1);color:var(--brand)">🏓</div>
+        <span class="tag" style="background:rgba(255,90,60,.1);color:var(--brand)">Most popular</span>
+        <h3>Table-Tennis Lesson</h3>
+        <p>One-on-one coaching to sharpen your technique, footwork, and match play — for all levels.</p>
+        <div class="price">$70 <small>/ 60 min</small></div>
+        <button class="btn btn-primary" onclick="openBooking('lesson')">Book a lesson</button>
+      </div>
+      <div class="card">
+        <div class="ic" style="background:rgba(18,182,134,.1);color:var(--brand-2)">🎤</div>
+        <span class="tag" style="background:rgba(18,182,134,.1);color:var(--brand-2)">Individuals</span>
+        <h3>Motivational Session</h3>
+        <p>A focused one-on-one to build momentum, mindset, and drive — on and off the table.</p>
+        <div class="price">$70 <small>/ 60 min</small></div>
+        <button class="btn btn-primary" onclick="openBooking('motivation')">Book a session</button>
+      </div>
+      <div class="card">
+        <div class="ic" style="background:rgba(255,212,59,.18);color:#b8860b">👥</div>
+        <span class="tag" style="background:rgba(255,212,59,.18);color:#b8860b">Teams & groups</span>
+        <h3>Corporate Packages</h3>
+        <p>Motivational Groups, Book Clubs & team sessions for companies and organizations.</p>
+        <div class="price">Custom <small>/ enquire</small></div>
+        <button class="btn btn-ghost" onclick="openBooking('corporate')">Request a package</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pad" id="how" style="background:var(--soft)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Simple by design</span>
+      <h2>Booking in four steps</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h4>Choose a service</h4><p>Lesson, motivational session, or a corporate package.</p></div>
+      <div class="step"><div class="n">2</div><h4>Pick a time</h4><p>See real-time weekday availability and grab a slot.</p></div>
+      <div class="step"><div class="n">3</div><h4>Confirm details</h4><p>Book now, pay later — no card required at checkout.</p></div>
+      <div class="step"><div class="n">4</div><h4>Get reminders</h4><p>Instant confirmation plus an automatic reminder.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="pad" id="corporate">
+  <div class="wrap">
+    <div class="band">
+      <div>
+        <span class="eyebrow" style="color:var(--accent)">For teams</span>
+        <h2>Motivate the whole room.</h2>
+        <p>Bring PongLiTation to your company or organization. High-energy sessions that build connection, momentum, and morale.</p>
+        <ul>
+          <li>Motivational Groups</li>
+          <li>Book Clubs</li>
+          <li>Corporate team-building & tournaments</li>
+          <li>Custom packages built around your team</li>
+        </ul>
+      </div>
+      <div style="text-align:center">
+        <button class="btn btn-primary" onclick="openBooking('corporate')" style="width:100%;justify-content:center">Request a package</button>
+        <p style="color:#9aa1ad;font-size:.82rem;margin-top:10px">We'll reply within one business day.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pad" id="manage" style="background:var(--soft)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">You're in control</span>
+      <h2>Manage everything, no code</h2>
+      <p>A simple dashboard to update your slots, prices, and copy anytime — changes appear on the site instantly.</p>
+    </div>
+    <div class="dash">
+      <div class="dash-ui">
+        <div class="bar"><i></i><i></i><i></i></div>
+        <div class="dash-row"><span>🗓️ &nbsp;Mon–Fri availability</span><span class="toggle"></span></div>
+        <div class="dash-row"><span>🏓 &nbsp;Table-Tennis Lesson</span><b>$70</b></div>
+        <div class="dash-row"><span>🎤 &nbsp;Motivational Session</span><b>$70</b></div>
+        <div class="dash-row"><span>👥 &nbsp;Book Club (corporate)</span><b>Custom</b></div>
+        <div class="dash-row"><span>⏰ &nbsp;Auto reminders</span><span class="toggle"></span></div>
+      </div>
+      <div>
+        <div class="feat"><div class="fic">🎚️</div><div><h4>Update slots & pricing</h4><p>Open or close times and change prices in seconds.</p></div></div>
+        <div class="feat"><div class="fic">✉️</div><div><h4>Automated emails</h4><p>Confirmations and reminders fire on their own — zero manual follow-up.</p></div></div>
+        <div class="feat"><div class="fic">✍️</div><div><h4>Edit copy anytime</h4><p>Change headlines and descriptions without touching code.</p></div></div>
+        <div class="feat"><div class="fic">📈</div><div><h4>Built-in SEO</h4><p>So new students and corporate teams can find you on Google.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="logo" href="#top"><span class="mark"><span>🏓</span></span> PongLiTation</a>
+        <p>Motivational sessions and table-tennis lessons for individuals and teams across the U.S.</p>
+      </div>
+      <div>
+        <h5>Services</h5>
+        <a href="#services">Table-Tennis Lessons</a>
+        <a href="#services">Motivational Sessions</a>
+        <a href="#corporate">Corporate Packages</a>
+      </div>
+      <div>
+        <h5>Get started</h5>
+        <a href="#" onclick="openBooking();return false">Book a session</a>
+        <a href="#manage">Owner dashboard</a>
+        <a href="#how">How it works</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="yr"></span> PongLiTation. All rights reserved.</span>
+      <span>Play · Grow · Win</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= BOOKING MODAL ================= -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="mTitle">Book a session</h3>
+      <button class="close" onclick="closeBooking()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="progress"><i id="p1"></i><i id="p2"></i><i id="p3"></i><i id="p4"></i></div>
+      <div id="stepArea"></div>
+    </div>
+    <div class="modal-foot" id="mFoot"></div>
+  </div>
+</div>
+
+<div class="demo-ribbon">Interactive demo · placeholder branding</div>
+
+<script>
+document.getElementById('yr').textContent = '2026';
+
+/* ---------- data ---------- */
+const SERVICES = {
+  lesson:     {name:'Table-Tennis Lesson', price:'$70', dur:'60 min', desc:'One-on-one coaching, all levels'},
+  motivation: {name:'Motivational Session', price:'$70', dur:'60 min', desc:'One-on-one mindset & momentum'},
+  corporate:  {name:'Corporate Package',    price:'Custom', dur:'Flexible', desc:'Motivational Groups, Book Clubs & teams'}
+};
+const TIMES = ['9:00 AM','10:00 AM','11:00 AM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM'];
+
+let state = {step:1, service:null, date:null, time:null, name:'', email:'', phone:'', notes:'', calMonth:null};
+
+function openBooking(svc){
+  state = {step:1, service:svc||null, date:null, time:null, name:'', email:'', phone:'', notes:'', calMonth:startMonth()};
+  if(svc){state.step=2;}
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+  render();
+}
+function closeBooking(){
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.getElementById('overlay').addEventListener('click',e=>{if(e.target.id==='overlay')closeBooking();});
+
+function startMonth(){const d=new Date(2026,7,1);return {y:2026,m:7};} // Aug 2026 (demo, deterministic)
+
+/* pseudo-random "taken" slots so availability feels real but stable */
+function seed(str){let h=0;for(let i=0;i<str.length;i++){h=(h*31+str.charCodeAt(i))>>>0;}return h;}
+function isTaken(dateKey,time){return (seed(dateKey+time)%10) < 3;} // ~30% taken
+function isCorporate(){return state.service==='corporate';}
+
+/* ---------- render ---------- */
+function render(){
+  const s=state.step;
+  for(let i=1;i<=4;i++){document.getElementById('p'+i).className = i<=s?'on':'';}
+  const area=document.getElementById('stepArea');
+  const foot=document.getElementById('mFoot');
+  document.getElementById('mTitle').textContent =
+     s===4?'Confirm your booking':(isCorporate()?'Request a package':'Book a session');
+
+  if(s===1){ // choose service
+    area.innerHTML = `
+      <div class="step-title">Choose a service</div>
+      <div class="step-sub">What would you like to book?</div>
+      ${Object.entries(SERVICES).map(([k,v])=>`
+        <div class="opt ${state.service===k?'sel':''}" onclick="pickService('${k}')">
+          <div><b>${v.name}</b><small>${v.desc} · ${v.dur}</small></div>
+          <span class="p">${v.price}</span>
+        </div>`).join('')}`;
+    foot.innerHTML = `<button class="btn btn-ghost" onclick="closeBooking()">Cancel</button>
+      <button class="btn btn-primary" onclick="next()" ${state.service?'':'disabled style=opacity:.5'}>Continue</button>`;
+  }
+
+  else if(s===2){ // date + time
+    if(isCorporate()){
+      area.innerHTML = `
+        <div class="step-title">Preferred date</div>
+        <div class="step-sub">Pick a weekday that suits your team — we'll confirm details by email.</div>
+        ${calendarHTML()}
+        <div class="notice" style="margin-top:14px">Corporate packages are tailored to your group. No time slot needed — just a preferred date.</div>`;
+    } else {
+      area.innerHTML = `
+        <div class="step-title">Pick a date & time</div>
+        <div class="step-sub">Bookings available Monday–Friday.</div>
+        ${calendarHTML()}
+        <div id="slotWrap" style="margin-top:14px">${state.date?slotsHTML():'<p style="color:var(--muted);font-size:.9rem">Select a date to see available times.</p>'}</div>`;
+    }
+    foot.innerHTML = `<button class="btn btn-ghost" onclick="prev()">Back</button>
+      <button class="btn btn-primary" onclick="next()" ${canNext2()?'':'disabled style=opacity:.5'}>Continue</button>`;
+  }
+
+  else if(s===3){ // details
+    area.innerHTML = `
+      <div class="step-title">Your details</div>
+      <div class="step-sub">Book now, pay later — no card required.</div>
+      <div class="field"><label>Full name</label><input id="f_name" value="${esc(state.name)}" placeholder="Jane Doe" oninput="state.name=this.value"></div>
+      <div class="field"><label>Email</label><input id="f_email" type="email" value="${esc(state.email)}" placeholder="jane@email.com" oninput="state.email=this.value"></div>
+      <div class="field"><label>Phone (optional)</label><input id="f_phone" value="${esc(state.phone)}" placeholder="(555) 000-0000" oninput="state.phone=this.value"></div>
+      <div class="field"><label>${isCorporate()?'Tell us about your group / package':'Notes (optional)'}</label><textarea id="f_notes" rows="3" placeholder="${isCorporate()?'Company, group size, what you have in mind…':'Anything I should know?'}" oninput="state.notes=this.value">${esc(state.notes)}</textarea></div>`;
+    foot.innerHTML = `<button class="btn btn-ghost" onclick="prev()">Back</button>
+      <button class="btn btn-primary" onclick="submitBooking()">Review & confirm</button>`;
+  }
+
+  else if(s===4){ // confirmation
+    const v=SERVICES[state.service];
+    area.innerHTML = `
+      <div class="confirm">
+        <div class="check">✓</div>
+        <h3>${isCorporate()?'Request sent!':'You&rsquo;re booked!'}</h3>
+        <p>${isCorporate()?'Thanks '+first(state.name)+' — we will reply within one business day.':'See you on '+fmtDate(state.date)+' at '+state.time+'.'}</p>
+        <div class="email-preview">
+          <div class="eh">📩 To: ${esc(state.email||'you@email.com')} &nbsp;·&nbsp; Subject: ${isCorporate()?'We received your request':'Your PongLiTation booking is confirmed'}</div>
+          <div class="eb">
+            <b>Hi ${esc(first(state.name)||'there')},</b><br>
+            ${isCorporate()
+              ? `Thanks for your interest in a <b>${v.name}</b>. We'll be in touch shortly to tailor it to your group.`
+              : `Your <b>${v.name}</b> is confirmed for <b>${fmtDate(state.date)}</b> at <b>${state.time}</b> (${v.price}, ${v.dur}).`}
+            <br><br>⏰ You'll get an automatic reminder before your session. Reply to reschedule anytime.
+            <br><br>— PongLiTation
+          </div>
+        </div>
+        <div class="notice" style="margin-top:16px">Demo confirmation — in the live site this email sends automatically, and a reminder fires before the session.</div>
+      </div>`;
+    foot.innerHTML = `<button class="btn btn-primary" style="flex:1;justify-content:center" onclick="closeBooking()">Done</button>`;
+  }
+}
+
+/* ---------- calendar ---------- */
+function calendarHTML(){
+  const {y,m}=state.calMonth;
+  const first=new Date(y,m,1);
+  const startDow=first.getDay();
+  const days=new Date(y,m+1,0).getDate();
+  const monthName=first.toLocaleString('en-US',{month:'long',year:'numeric'});
+  const today=new Date(2026,7,5); // demo "today" = Aug 5 2026
+  let cells='';
+  for(let i=0;i<startDow;i++)cells+=`<div class="day muted"></div>`;
+  for(let d=1;d<=days;d++){
+    const date=new Date(y,m,d);
+    const dow=date.getDay();
+    const key=`${y}-${m+1}-${d}`;
+    const weekend = dow===0||dow===6;
+    const past = date < today;
+    if(weekend||past){cells+=`<div class="day dis">${d}</div>`;}
+    else{
+      const sel = state.date===key?'sel':'';
+      cells+=`<div class="day avail ${sel}" onclick="pickDate('${key}','${fmtKey(y,m,d)}')">${d}</div>`;
+    }
+  }
+  const dows=['Su','Mo','Tu','We','Th','Fr','Sa'].map(x=>`<div class="dow">${x}</div>`).join('');
+  return `
+    <div class="cal-head">
+      <button onclick="shiftMonth(-1)">‹</button>
+      <b>${monthName}</b>
+      <button onclick="shiftMonth(1)">›</button>
+    </div>
+    <div class="cal">${dows}${cells}</div>`;
+}
+function shiftMonth(dir){
+  let {y,m}=state.calMonth; m+=dir;
+  if(m<0){m=11;y--;} if(m>11){m=0;y++;}
+  if(y<2026||(y===2026&&m<7)){return;} // don't go before Aug 2026
+  state.calMonth={y,m}; render();
+}
+function pickDate(key,label){state.date=key;state.dateLabel=label;state.time=null;render();}
+function slotsHTML(){
+  return `<div class="step-sub" style="margin-bottom:8px">Available times · ${state.dateLabel}</div>
+   <div class="slots">${TIMES.map(t=>{
+     const taken=isTaken(state.date,t);
+     return `<div class="slot ${taken?'taken':''} ${state.time===t?'sel':''}" ${taken?'':`onclick="pickTime('${t}')"`}>${t}</div>`;
+   }).join('')}</div>`;
+}
+function pickTime(t){state.time=t;render();}
+
+/* ---------- flow ---------- */
+function pickService(k){state.service=k;render();}
+function canNext2(){ return isCorporate()? !!state.date : (state.date&&state.time); }
+function next(){ if(state.step<3){state.step++;render();} }
+function prev(){ if(state.step>1){state.step--; if(state.step===1)state.service=state.service; render();} }
+function submitBooking(){
+  if(!state.name || !state.email){alert('Please add your name and email.');return;}
+  state.step=4; render();
+}
+
+/* ---------- helpers ---------- */
+function fmtKey(y,m,d){return new Date(y,m,d).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});}
+function fmtDate(key){const [y,m,d]=key.split('-').map(Number);return new Date(y,m-1,d).toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});}
+function first(n){return (n||'').trim().split(' ')[0];}
+function esc(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+</script>
+</body>
+</html>
