@@ -1,0 +1,11 @@
+# Render Blueprint — one-click deploy for the PongLiTation booking engine.
+# Deploy via: render.com → New + → Blueprint → connect this public repo.
+services:
+  - type: web
+    name: ponglitation
+    env: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /healthz
