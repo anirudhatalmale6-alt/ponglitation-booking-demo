@@ -244,14 +244,14 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
     <div>
       <span class="eyebrow">Rooted · Rising · Unstoppable</span>
       <h1>Grow through <span class="hl">whatever you go through.</span></h1>
-      <p class="lead">Motivational sessions and table-tennis lessons — a root pushing through adversity and rising into something unbreakable. Book in a few clicks. And know you are never growing alone.</p>
+      <p class="lead">Motivational sessions and table-tennis lessons for anyone rising through something hard. Break the chains. Keep growing. And never do it alone.</p>
       <div class="hero-cta">
         <button class="btn btn-primary" onclick="openBooking()">Book a session →</button>
         <a class="btn btn-ghost" href="#services">Explore sessions</a>
       </div>
       <div class="trust">
         <div><b>60 min</b><span>1-on-1 sessions</span></div>
-        <div><b>5 days</b><span>Incl. weekends</span></div>
+        <div><b>7 days</b><span>Every week · CT</span></div>
         <div><b>0 emails</b><span>Fully automated</span></div>
       </div>
     </div>
@@ -274,7 +274,7 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
   <div class="wrap">
     <div class="sec-head">
       <span class="eyebrow">What we offer</span>
-      <h2>Pick your session</h2>
+      <h2>Pick your Inspiration!</h2>
       <p>Every booking sends an instant confirmation and an automatic reminder before your session — no follow-up needed.</p>
     </div>
     <div class="cards">
@@ -297,10 +297,10 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
       <div class="card">
         <div class="ic" style="background:rgba(169,189,151,.24);color:#5f7350">🌱</div>
         <span class="tag" style="background:rgba(169,189,151,.24);color:#5f7350">Grow together</span>
-        <h3>Group Sessions</h3>
-        <p>Motivational Groups & Book Clubs — grow alongside others who get it. Because no one should have to grow alone.</p>
-        <div class="price">Let&rsquo;s talk <small>/ enquire</small></div>
-        <button class="btn btn-ghost" onclick="openBooking('group')">Enquire about groups</button>
+        <h3>Groups &amp; Book Clubs</h3>
+        <p>Rise alongside others in a Motivational Group, or join the Book Club to read, reflect and grow — because no one should have to grow alone.</p>
+        <div class="price" style="font-size:1.2rem;line-height:1.55">$70 <small>/ hour · Motivational Groups</small><br>$30 <small>/ month · Book Club</small></div>
+        <button class="btn btn-ghost" onclick="openBooking('group')">Enquire</button>
       </div>
     </div>
   </div>
@@ -326,12 +326,12 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
     <div class="band">
       <div>
         <span class="eyebrow" style="color:var(--accent)">The meaning behind the name</span>
-        <h2>Like a root breaking through stone.</h2>
-        <p>PongLiTation is growth in motion — a seed that pushes through hard ground, breaks the chains that hold it, and rises into something unbreakable. Adversity doesn&rsquo;t stop it. It feeds it.</p>
+        <h2>Roots crack concrete.<br>So can you.</h2>
+        <p>PongLiTation is growth that refuses to be buried. A seed forced into hard ground doesn&rsquo;t surrender — it pushes, it splits stone, it snaps every chain meant to hold it down, and it rises into something unbreakable. That is the promise here: whatever is pressing on you right now, you are still growing. And you are not doing it alone.</p>
         <ul>
-          <li><b>Rooted</b> — a steady foundation, one session at a time</li>
-          <li><b>Rising</b> — momentum that carries you forward</li>
-          <li><b>Unstoppable</b> — resilience that keeps going through it all</li>
+          <li><b>Rooted</b> — planted so deep that nothing can uproot you</li>
+          <li><b>Rising</b> — momentum that turns pressure into fuel</li>
+          <li><b>Unstoppable</b> — resilience that keeps going when everything says stop</li>
           <li><b>Together</b> — because you were never meant to grow alone</li>
         </ul>
       </div>
@@ -356,7 +356,8 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
         <div class="dash-row"><span>🗓️ &nbsp;Weekly availability</span><span class="toggle"></span></div>
         <div class="dash-row"><span>🏓 &nbsp;Table-Tennis Lesson</span><b>$70</b></div>
         <div class="dash-row"><span>🎤 &nbsp;Motivational Session</span><b>$70</b></div>
-        <div class="dash-row"><span>🌱 &nbsp;Group Sessions</span><b>Enquiry</b></div>
+        <div class="dash-row"><span>🌱 &nbsp;Motivational Groups</span><b>$70/hr</b></div>
+        <div class="dash-row"><span>📖 &nbsp;Book Club</span><b>$30/mo</b></div>
         <div class="dash-row"><span>⏰ &nbsp;Auto reminders</span><span class="toggle"></span></div>
       </div>
       <div>
@@ -420,11 +421,15 @@ document.getElementById('yr').textContent = '2026';
 const SERVICES = {
   lesson:     {name:'Table-Tennis Lesson', price:'$70', dur:'60 min', desc:'One-on-one coaching, all levels'},
   motivation: {name:'Motivational Session', price:'$70', dur:'60 min', desc:'One-on-one mindset & momentum'},
-  group:      {name:'Group Session',        price:'Enquiry', dur:'Flexible', desc:'Motivational Groups & Book Clubs'}
+  group:      {name:'Motivational Group',   price:'$70', dur:'per hour', desc:'Grow together, in a group setting'},
+  bookclub:   {name:'Book Club',            price:'$30', dur:'per month', desc:'Read, reflect & rise — monthly membership'}
 };
-/* Availability: Tue/Thu/Fri afternoons (2–5pm) · Sat/Sun mornings (8am–12pm). Mon & Wed closed. */
+/* Availability (all Central Time / CT):
+   Mon & Wed 4–7pm · Tue/Thu/Fri 2–5pm · Sat & Sun 8am–12pm */
 const SCHEDULE = {
+  1:['4:00 PM','5:00 PM','6:00 PM'],                       // Mon
   2:['2:00 PM','3:00 PM','4:00 PM'],                       // Tue
+  3:['4:00 PM','5:00 PM','6:00 PM'],                       // Wed
   4:['2:00 PM','3:00 PM','4:00 PM'],                       // Thu
   5:['2:00 PM','3:00 PM','4:00 PM'],                       // Fri
   6:['8:00 AM','9:00 AM','10:00 AM','11:00 AM'],           // Sat
@@ -453,7 +458,7 @@ function startMonth(){const d=new Date(2026,7,1);return {y:2026,m:7};} // Aug 20
 /* pseudo-random "taken" slots so availability feels real but stable */
 function seed(str){let h=0;for(let i=0;i<str.length;i++){h=(h*31+str.charCodeAt(i))>>>0;}return h;}
 function isTaken(dateKey,time){return (seed(dateKey+time)%10) < 3;} // ~30% taken
-function isGroup(){return state.service==='group';}
+function isEnquiry(){return state.service==='group'||state.service==='bookclub';}
 
 /* ---------- render ---------- */
 function render(){
@@ -462,7 +467,7 @@ function render(){
   const area=document.getElementById('stepArea');
   const foot=document.getElementById('mFoot');
   document.getElementById('mTitle').textContent =
-     s===4?'Confirm your booking':(isGroup()?'Enquire about a group':'Book a session');
+     s===4?'Confirm your booking':(isEnquiry()?'Enquire about a group':'Book a session');
 
   if(s===1){ // choose service
     area.innerHTML = `
@@ -478,16 +483,16 @@ function render(){
   }
 
   else if(s===2){ // date + time
-    if(isGroup()){
+    if(isEnquiry()){
       area.innerHTML = `
         <div class="step-title">Preferred date</div>
-        <div class="step-sub">Pick a date that suits your group — we&rsquo;ll confirm the details by email.</div>
+        <div class="step-sub">Pick a preferred start date — we&rsquo;ll confirm the details by email.</div>
         ${calendarHTML()}
         <div class="notice" style="margin-top:14px">Group sessions are shaped around you. No time slot needed — just a preferred date to start the conversation.</div>`;
     } else {
       area.innerHTML = `
         <div class="step-title">Pick a date & time</div>
-        <div class="step-sub">Tue, Thu &amp; Fri afternoons · Sat &amp; Sun mornings.</div>
+        <div class="step-sub">Mon &amp; Wed 4–7pm · Tue/Thu/Fri 2–5pm · Sat &amp; Sun 8am–12pm &nbsp;·&nbsp; all times CT.</div>
         ${calendarHTML()}
         <div id="slotWrap" style="margin-top:14px">${state.date?slotsHTML():'<p style="color:var(--muted);font-size:.9rem">Select a date to see available times.</p>'}</div>`;
     }
@@ -502,7 +507,7 @@ function render(){
       <div class="field"><label>Full name</label><input id="f_name" value="${esc(state.name)}" placeholder="Jane Doe" oninput="state.name=this.value"></div>
       <div class="field"><label>Email</label><input id="f_email" type="email" value="${esc(state.email)}" placeholder="jane@email.com" oninput="state.email=this.value"></div>
       <div class="field"><label>Phone (optional)</label><input id="f_phone" value="${esc(state.phone)}" placeholder="(555) 000-0000" oninput="state.phone=this.value"></div>
-      <div class="field"><label>${isGroup()?'Tell us about your group':'Notes (optional)'}</label><textarea id="f_notes" rows="3" placeholder="${isGroup()?'Group size, what you&rsquo;re hoping to get out of it…':'Anything I should know?'}" oninput="state.notes=this.value">${esc(state.notes)}</textarea></div>`;
+      <div class="field"><label>${isEnquiry()?'Tell us about your group':'Notes (optional)'}</label><textarea id="f_notes" rows="3" placeholder="${isEnquiry()?'Group size, what you&rsquo;re hoping to get out of it…':'Anything I should know?'}" oninput="state.notes=this.value">${esc(state.notes)}</textarea></div>`;
     foot.innerHTML = `<button class="btn btn-ghost" onclick="prev()">Back</button>
       <button class="btn btn-primary" onclick="submitBooking()">Review & confirm</button>`;
   }
@@ -512,15 +517,15 @@ function render(){
     area.innerHTML = `
       <div class="confirm">
         <div class="check">✓</div>
-        <h3>${isGroup()?'Request sent!':'You&rsquo;re booked!'}</h3>
-        <p>${isGroup()?'Thanks '+first(state.name)+' — we&rsquo;ll be in touch very soon.':'See you on '+fmtDate(state.date)+' at '+state.time+'.'}</p>
+        <h3>${isEnquiry()?'Request sent!':'You&rsquo;re booked!'}</h3>
+        <p>${isEnquiry()?'Thanks '+first(state.name)+' — we&rsquo;ll be in touch very soon.':'See you on '+fmtDate(state.date)+' at '+state.time+' CT.'}</p>
         <div class="email-preview">
-          <div class="eh">📩 To: ${esc(state.email||'you@email.com')} &nbsp;·&nbsp; Subject: ${isGroup()?'We received your request':'Your PongLiTation booking is confirmed'}</div>
+          <div class="eh">📩 To: ${esc(state.email||'you@email.com')} &nbsp;·&nbsp; Subject: ${isEnquiry()?'We received your request':'Your PongLiTation booking is confirmed'}</div>
           <div class="eb">
             <b>Hi ${esc(first(state.name)||'there')},</b><br>
-            ${isGroup()
-              ? `Thanks for your interest in a <b>${v.name}</b>. We'll be in touch shortly to tailor it to your group.`
-              : `Your <b>${v.name}</b> is confirmed for <b>${fmtDate(state.date)}</b> at <b>${state.time}</b> (${v.price}, ${v.dur}).`}
+            ${isEnquiry()
+              ? `Thanks for your interest in the <b>${v.name}</b> (${v.price} ${v.dur}). We'll be in touch shortly to get you started.`
+              : `Your <b>${v.name}</b> is confirmed for <b>${fmtDate(state.date)}</b> at <b>${state.time} CT</b> (${v.price}, ${v.dur}).`}
             <br><br>⏰ You'll get an automatic reminder before your session. Reply to reschedule anytime.
             <br><br>— PongLiTation
           </div>
@@ -571,7 +576,7 @@ function shiftMonth(dir){
 function pickDate(key,label){state.date=key;state.dateLabel=label;state.time=null;render();}
 function slotsHTML(){
   const times=timesFor(state.date);
-  return `<div class="step-sub" style="margin-bottom:8px">Available times · ${state.dateLabel}</div>
+  return `<div class="step-sub" style="margin-bottom:8px">Available times · ${state.dateLabel} <span style="opacity:.7">(CT)</span></div>
    <div class="slots">${times.map(t=>{
      const taken=isTaken(state.date,t);
      return `<div class="slot ${taken?'taken':''} ${state.time===t?'sel':''}" ${taken?'':`onclick="pickTime('${t}')"`}>${t}</div>`;
@@ -581,7 +586,7 @@ function pickTime(t){state.time=t;render();}
 
 /* ---------- flow ---------- */
 function pickService(k){state.service=k;render();}
-function canNext2(){ return isGroup()? !!state.date : (state.date&&state.time); }
+function canNext2(){ return isEnquiry()? !!state.date : (state.date&&state.time); }
 function next(){ if(state.step<3){state.step++;render();} }
 function prev(){ if(state.step>1){state.step--; if(state.step===1)state.service=state.service; render();} }
 function submitBooking(){
