@@ -9,6 +9,9 @@
 <meta property="og:title" content="PongLiTation — Play. Grow. Win." />
 <meta property="og:description" content="Motivational sessions and table-tennis lessons. Book online in a few clicks." />
 <meta property="og:type" content="website" />
+<meta property="og:image" content="logo.png" />
+<link rel="icon" type="image/png" href="favicon.png" />
+<link rel="apple-touch-icon" href="favicon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -24,18 +27,19 @@
 </script>
 <style>
 :root{
-  /* --- BRAND TOKENS (swap these for the real logo palette) --- */
-  --ink:#0e1116;
+  /* --- BRAND TOKENS · PongLiTation botanical palette --- */
+  --ink:#2c2b28;         /* charcoal wordmark */
   --paper:#ffffff;
-  --brand:#ff5a3c;       /* energetic paddle-orange */
-  --brand-2:#12b886;     /* table-green */
-  --accent:#ffd43b;      /* ball-yellow */
-  --muted:#5b6472;
-  --line:#e7e9ee;
-  --soft:#f5f6f8;
+  --brand:#5f7350;       /* deep sage / olive */
+  --brand-2:#c39a76;     /* tan branch */
+  --accent:#a9bd97;      /* soft sage leaf */
+  --muted:#7a776d;
+  --line:#e8e3d7;
+  --soft:#f5f2ea;        /* warm cream */
+  --cream:#f6f4f0;
   --radius:16px;
-  --shadow:0 10px 40px rgba(14,17,22,.08);
-  --shadow-lg:0 24px 70px rgba(14,17,22,.16);
+  --shadow:0 10px 40px rgba(44,43,40,.09);
+  --shadow-lg:0 24px 70px rgba(44,43,40,.15);
   --font:'Inter',system-ui,sans-serif;
   --display:'Sora','Inter',sans-serif;
 }
@@ -47,8 +51,8 @@ a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
 .wrap{max-width:1140px;margin:0 auto;padding:0 22px}
 .btn{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--display);font-weight:700;font-size:1rem;border:none;cursor:pointer;border-radius:999px;padding:.85rem 1.5rem;transition:transform .15s ease,box-shadow .15s ease,background .2s}
-.btn-primary{background:var(--brand);color:#fff;box-shadow:0 8px 24px rgba(255,90,60,.35)}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(255,90,60,.45)}
+.btn-primary{background:var(--brand);color:#fff;box-shadow:0 8px 24px rgba(95,115,80,.30)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(95,115,80,.42)}
 .btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
 .btn-ghost:hover{border-color:var(--ink)}
 .btn-dark{background:var(--ink);color:#fff}
@@ -58,9 +62,9 @@ img{max-width:100%;display:block}
 /* header */
 header{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);background:rgba(255,255,255,.82);border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
-.logo{display:flex;align-items:center;gap:.6rem;font-family:var(--display);font-weight:800;font-size:1.25rem}
-.logo .mark{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--brand),var(--accent));display:grid;place-items:center;color:#fff;font-size:1.2rem;box-shadow:0 6px 18px rgba(255,90,60,.35)}
-.logo .mark span{transform:rotate(-8deg)}
+.logo{display:flex;align-items:center}
+.logo img{height:42px;width:auto}
+.foot-logo img{height:46px}
 .nav-links{display:flex;gap:2rem;align-items:center}
 .nav-links a{font-weight:500;color:var(--muted);font-size:.95rem}
 .nav-links a:hover{color:var(--ink)}
@@ -69,7 +73,7 @@ header{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);background:rg
 
 /* hero */
 .hero{position:relative;overflow:hidden;padding:76px 0 88px}
-.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(1200px 500px at 80% -10%,rgba(255,212,59,.28),transparent 60%),radial-gradient(900px 500px at 0% 110%,rgba(18,182,134,.18),transparent 55%);z-index:-1}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(1200px 500px at 80% -10%,rgba(169,189,151,.30),transparent 60%),radial-gradient(900px 500px at 0% 110%,rgba(195,154,118,.20),transparent 55%);z-index:-1}
 .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
 .hero h1{font-size:clamp(2.4rem,5vw,3.8rem);font-weight:800}
 .hero h1 .hl{color:var(--brand)}
@@ -81,10 +85,10 @@ header{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);background:rg
 .trust span{font-size:.82rem;color:var(--muted)}
 .hero-card{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow-lg);padding:26px;transform:rotate(1.2deg)}
 .hero-card .hc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-.hero-card .hc-badge{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--soft);color:var(--brand-2);padding:.3rem .6rem;border-radius:6px}
+.hero-card .hc-badge{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--soft);color:var(--brand);padding:.3rem .6rem;border-radius:6px}
 .mini-slot{display:flex;justify-content:space-between;align-items:center;padding:.75rem .9rem;border:1px solid var(--line);border-radius:12px;margin-bottom:.55rem;font-size:.92rem}
-.mini-slot.on{border-color:var(--brand);background:rgba(255,90,60,.06)}
-.mini-slot .dot{width:8px;height:8px;border-radius:50%;background:var(--brand-2);display:inline-block;margin-right:.5rem}
+.mini-slot.on{border-color:var(--brand);background:rgba(95,115,80,.08)}
+.mini-slot .dot{width:8px;height:8px;border-radius:50%;background:var(--brand);display:inline-block;margin-right:.5rem}
 .mini-slot.off{opacity:.45}
 
 /* generic section */
@@ -114,7 +118,7 @@ section.pad{padding:84px 0}
 
 /* corporate band */
 .band{background:var(--ink);color:#fff;border-radius:26px;padding:52px;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center;overflow:hidden;position:relative}
-.band::after{content:"";position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,212,59,.25),transparent 70%)}
+.band::after{content:"";position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(169,189,151,.28),transparent 70%)}
 .band h2{font-size:2.2rem;margin-bottom:.7rem}
 .band p{color:#c7ccd6;font-size:1.02rem}
 .band ul{list-style:none;margin-top:1.2rem;display:flex;flex-direction:column;gap:.6rem}
@@ -127,10 +131,10 @@ section.pad{padding:84px 0}
 .dash-ui .bar{display:flex;gap:.5rem;margin-bottom:14px}
 .dash-ui .bar i{width:11px;height:11px;border-radius:50%;background:var(--line)}
 .dash-row{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid var(--line);border-radius:10px;padding:.7rem .9rem;margin-bottom:.5rem;font-size:.9rem}
-.dash-row .toggle{width:38px;height:22px;border-radius:999px;background:var(--brand-2);position:relative}
+.dash-row .toggle{width:38px;height:22px;border-radius:999px;background:var(--brand);position:relative}
 .dash-row .toggle::after{content:"";position:absolute;width:16px;height:16px;border-radius:50%;background:#fff;top:3px;right:3px}
 .feat{display:flex;gap:.8rem;margin-bottom:1.1rem}
-.feat .fic{flex:0 0 auto;width:38px;height:38px;border-radius:10px;background:rgba(255,90,60,.1);color:var(--brand);display:grid;place-items:center;font-size:1.1rem}
+.feat .fic{flex:0 0 auto;width:38px;height:38px;border-radius:10px;background:rgba(95,115,80,.13);color:var(--brand);display:grid;place-items:center;font-size:1.1rem}
 .feat h4{font-size:1.05rem;margin-bottom:.15rem}
 .feat p{color:var(--muted);font-size:.92rem}
 
@@ -157,7 +161,7 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
 .step-sub{color:var(--muted);font-size:.9rem;margin-bottom:18px}
 .opt{border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:.7rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:border .15s,background .15s}
 .opt:hover{border-color:var(--brand)}
-.opt.sel{border-color:var(--brand);background:rgba(255,90,60,.06)}
+.opt.sel{border-color:var(--brand);background:rgba(95,115,80,.08)}
 .opt b{font-family:var(--display)}
 .opt small{color:var(--muted);display:block;font-size:.82rem;margin-top:2px}
 .opt .p{font-family:var(--display);font-weight:700;color:var(--brand)}
@@ -186,7 +190,7 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
 .modal-foot{display:flex;gap:.7rem;padding:18px 26px;border-top:1px solid var(--line);position:sticky;bottom:0;background:#fff}
 .modal-foot .btn{flex:1;justify-content:center}
 .confirm{text-align:center;padding:20px 6px}
-.confirm .check{width:74px;height:74px;border-radius:50%;background:var(--brand-2);color:#fff;display:grid;place-items:center;font-size:2.2rem;margin:0 auto 18px;animation:pop .4s ease}
+.confirm .check{width:74px;height:74px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font-size:2.2rem;margin:0 auto 18px;animation:pop .4s ease}
 @keyframes pop{0%{transform:scale(.4);opacity:0}100%{transform:scale(1);opacity:1}}
 .confirm h3{font-size:1.5rem;margin-bottom:.5rem}
 .confirm p{color:var(--muted);margin-bottom:6px}
@@ -194,7 +198,7 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
 .email-preview .eh{background:var(--soft);padding:10px 14px;font-size:.78rem;color:var(--muted);border-bottom:1px solid var(--line)}
 .email-preview .eb{padding:14px;font-size:.88rem}
 .email-preview .eb b{font-family:var(--display)}
-.notice{background:rgba(255,212,59,.16);border:1px solid rgba(255,212,59,.5);color:#7a5c00;font-size:.82rem;padding:.7rem .9rem;border-radius:10px;text-align:center}
+.notice{background:rgba(169,189,151,.20);border:1px solid rgba(169,189,151,.55);color:#55603f;font-size:.82rem;padding:.7rem .9rem;border-radius:10px;text-align:center}
 
 @media(max-width:900px){
   .hero-grid{grid-template-columns:1fr;gap:36px}
@@ -210,9 +214,8 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
   .steps{grid-template-columns:1fr}
   .slots{grid-template-columns:repeat(2,1fr)}
   .trust{gap:1.1rem}
-  .nav .btn-primary{padding:.6rem 1rem;font-size:.9rem}
-  .logo{font-size:1.1rem}
-  .logo .mark{width:34px;height:34px}
+  .nav .btn-primary{padding:.55rem .95rem;font-size:.88rem}
+  .logo img{height:32px}
 }
 .demo-ribbon{position:fixed;bottom:14px;left:14px;z-index:60;background:var(--ink);color:#fff;font-size:.78rem;padding:.5rem .8rem;border-radius:999px;box-shadow:var(--shadow);opacity:.9}
 </style>
@@ -221,7 +224,7 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
 
 <header>
   <div class="wrap nav">
-    <a class="logo" href="#top"><span class="mark"><span>🏓</span></span> PongLiTation</a>
+    <a class="logo" href="#top"><img src="logo-header.png" alt="PongLiTation" /></a>
     <nav class="nav-links">
       <a href="#services">Services</a>
       <a href="#how">How it works</a>
@@ -277,24 +280,24 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
     </div>
     <div class="cards">
       <div class="card">
-        <div class="ic" style="background:rgba(255,90,60,.1);color:var(--brand)">🏓</div>
-        <span class="tag" style="background:rgba(255,90,60,.1);color:var(--brand)">Most popular</span>
+        <div class="ic" style="background:rgba(95,115,80,.13);color:var(--brand)">🏓</div>
+        <span class="tag" style="background:rgba(95,115,80,.13);color:var(--brand)">Most popular</span>
         <h3>Table-Tennis Lesson</h3>
         <p>One-on-one coaching to sharpen your technique, footwork, and match play — for all levels.</p>
         <div class="price">$70 <small>/ 60 min</small></div>
         <button class="btn btn-primary" onclick="openBooking('lesson')">Book a lesson</button>
       </div>
       <div class="card">
-        <div class="ic" style="background:rgba(18,182,134,.1);color:var(--brand-2)">🎤</div>
-        <span class="tag" style="background:rgba(18,182,134,.1);color:var(--brand-2)">Individuals</span>
+        <div class="ic" style="background:rgba(195,154,118,.16);color:var(--brand)">🎤</div>
+        <span class="tag" style="background:rgba(195,154,118,.16);color:var(--brand)">Individuals</span>
         <h3>Motivational Session</h3>
         <p>A focused one-on-one to build momentum, mindset, and drive — on and off the table.</p>
         <div class="price">$70 <small>/ 60 min</small></div>
         <button class="btn btn-primary" onclick="openBooking('motivation')">Book a session</button>
       </div>
       <div class="card">
-        <div class="ic" style="background:rgba(255,212,59,.18);color:#b8860b">👥</div>
-        <span class="tag" style="background:rgba(255,212,59,.18);color:#b8860b">Teams & groups</span>
+        <div class="ic" style="background:rgba(169,189,151,.24);color:#8a6b3f">👥</div>
+        <span class="tag" style="background:rgba(169,189,151,.24);color:#8a6b3f">Teams & groups</span>
         <h3>Corporate Packages</h3>
         <p>Motivational Groups, Book Clubs & team sessions for companies and organizations.</p>
         <div class="price">Custom <small>/ enquire</small></div>
@@ -371,7 +374,7 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <a class="logo" href="#top"><span class="mark"><span>🏓</span></span> PongLiTation</a>
+        <a class="logo foot-logo" href="#top"><img src="logo-header.png" alt="PongLiTation" /></a>
         <p>Motivational sessions and table-tennis lessons for individuals and teams across the U.S.</p>
       </div>
       <div>
@@ -409,7 +412,7 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
   </div>
 </div>
 
-<div class="demo-ribbon">Interactive demo · placeholder branding</div>
+<div class="demo-ribbon">Interactive demo · click "Book now" to try it</div>
 
 <script>
 document.getElementById('yr').textContent = '2026';
