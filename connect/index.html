@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PongLiTation — Connect Your Domain</title>
+<link rel="icon" type="image/png" href="../favicon.png" />
+<style>
+:root{--ink:#2c2b28;--brand:#5f7350;--sage:#a9bd97;--tan:#c39a76;--muted:#7a776d;--line:#e8e3d7;--cream:#f6f4f0;--soft:#f5f2ea}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--cream);line-height:1.6}
+.wrap{max-width:760px;margin:0 auto;padding:34px 20px 70px}
+h1{font-family:Sora,sans-serif;font-size:2rem;letter-spacing:-.02em;margin-bottom:6px}
+.eyebrow{font-family:Sora,sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--brand);margin-bottom:10px}
+.lead{color:var(--muted);font-size:1.05rem;margin-bottom:26px}
+.part{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px 26px 20px;margin-bottom:22px;box-shadow:0 10px 40px rgba(44,43,40,.06)}
+.part h2{font-family:Sora,sans-serif;font-size:1.3rem;display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.badge{width:34px;height:34px;flex:0 0 auto;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font-family:Sora,sans-serif;font-weight:700;font-size:.95rem}
+.time{font-size:.8rem;color:var(--muted);margin-bottom:16px}
+ol{margin:0 0 6px 4px;padding-left:20px}
+ol li{margin-bottom:12px}
+.val{display:inline-block;background:var(--soft);border:1px solid var(--line);border-radius:7px;padding:2px 9px;font-family:ui-monospace,Menlo,monospace;font-size:.9rem;color:var(--ink);word-break:break-all}
+.note{background:rgba(169,189,151,.16);border:1px solid rgba(169,189,151,.5);border-radius:11px;padding:12px 15px;font-size:.9rem;margin-top:14px}
+.warn{background:rgba(195,154,118,.16);border:1px solid rgba(195,154,118,.55);border-radius:11px;padding:12px 15px;font-size:.9rem;margin-top:14px}
+a{color:var(--brand);font-weight:600}
+.done{background:var(--ink);color:#fff;border-radius:18px;padding:24px 26px}
+.done h2{font-family:Sora,sans-serif;font-size:1.2rem;margin-bottom:8px}
+.done p{color:#d9d6cd;font-size:.95rem}
+table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:10px;background:var(--soft);border-radius:10px;overflow:hidden}
+th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--line)}
+th{font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:#efeadf}
+td{font-family:ui-monospace,Menlo,monospace;font-size:.86rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">PongLiTation · Connect Domain</div>
+  <h1>Point ponglitation.com at your site 🌐</h1>
+  <p class="lead">This links the domain you bought to your live site. It's two short parts — tell Render your domain, then paste two records into Namecheap. I've written the exact values. About 10 minutes, then the internet does the rest.</p>
+
+  <div class="part">
+    <h2><span class="badge">1</span> Tell Render your domain</h2>
+    <div class="time">≈ 2 minutes</div>
+    <ol>
+      <li>In Render, open your <b>ponglitation</b> service.</li>
+      <li>Left menu → <b>Settings</b> → scroll down to <b>Custom Domains</b>.</li>
+      <li>Click <b>Add Custom Domain</b>, type <span class="val">ponglitation.com</span>, save.</li>
+      <li>Click <b>Add Custom Domain</b> again, type <span class="val">www.ponglitation.com</span>, save.</li>
+      <li>Render will now show the DNS records it wants (an <b>A</b> record for the root and a <b>CNAME</b> for www). Keep this tab open — you'll copy from it in Part 2.</li>
+    </ol>
+    <div class="note">These are the values Render normally gives — yours should match. If Render shows something slightly different, always go with what <b>Render</b> shows.
+      <table>
+        <tr><th>Type</th><th>Host</th><th>Points to</th></tr>
+        <tr><td>A</td><td>@</td><td>216.24.57.1</td></tr>
+        <tr><td>CNAME</td><td>www</td><td>ponglitation.onrender.com</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="part">
+    <h2><span class="badge">2</span> Add the records at Namecheap</h2>
+    <div class="time">≈ 5 minutes</div>
+    <ol>
+      <li>Go to <a href="https://ap.www.namecheap.com/domains/list/" target="_blank">Namecheap → Domain List</a> and click <b>Manage</b> next to ponglitation.com.</li>
+      <li>Click the <b>Advanced DNS</b> tab.</li>
+      <li>Under <b>Host Records</b>, <b>delete the records Namecheap added by default</b> (usually a CNAME “www → parkingpage.namecheap.com” and a “URL Redirect / @”). Click the trash-can icon on each. This is important — they'll conflict otherwise.</li>
+      <li>Click <b>Add New Record</b> and add these two (use Render's values if different):
+        <table>
+          <tr><th>Type</th><th>Host</th><th>Value</th><th>TTL</th></tr>
+          <tr><td>A Record</td><td>@</td><td>216.24.57.1</td><td>Automatic</td></tr>
+          <tr><td>CNAME Record</td><td>www</td><td>ponglitation.onrender.com</td><td>Automatic</td></tr>
+        </table>
+      </li>
+      <li>Click the green <b>Save All Changes</b> (the little checkmark).</li>
+    </ol>
+    <div class="warn">Tip: on the CNAME value, Namecheap sometimes adds a dot at the end automatically — that's fine, leave it.</div>
+  </div>
+
+  <div class="done">
+    <h2>That's it — the internet takes over ⏳</h2>
+    <p>Back in Render, the domain will move from “Verifying” to a green check, and it sets up the secure padlock (SSL) automatically. This usually takes a few minutes but can take up to an hour while the change spreads across the internet — totally normal.</p>
+    <p style="margin-top:10px">Once it's green, <b>ponglitation.com</b> shows your site. Drop me a message and I'll confirm everything's perfect, then set up your <b>hello@ponglitation.com</b> emails. If any step looks different from what I described, just tell me what you see — I'll guide you through it.</p>
+  </div>
+</div>
+</body>
+</html>
