@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PongLiTation · Owner Dashboard</title>
+<link rel="icon" type="image/png" href="favicon.png" />
+<style>
+:root{--ink:#2c2b28;--brand:#5f7350;--tan:#c39a76;--sage:#a9bd97;--muted:#7a776d;--line:#e8e3d7;--soft:#f5f2ea;--cream:#f6f4f0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--cream);line-height:1.5}
+.wrap{max-width:1000px;margin:0 auto;padding:22px}
+header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+header .wrap{display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px;font-family:Sora,sans-serif;font-weight:800}
+.logo img{height:34px}
+h1{font-family:Sora,sans-serif;font-size:1.05rem}
+h2{font-family:Sora,sans-serif;font-size:1.15rem;margin:26px 0 12px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:14px}
+.btn{font-family:Sora,sans-serif;font-weight:700;border:none;border-radius:999px;padding:.6rem 1.1rem;cursor:pointer;background:var(--brand);color:#fff;font-size:.9rem}
+.btn.sm{padding:.35rem .8rem;font-size:.82rem}
+.btn.ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink)}
+.btn.danger{background:#c0553f}
+input,select{font-family:inherit;border:1.5px solid var(--line);border-radius:9px;padding:.5rem .7rem;font-size:.9rem}
+input:focus,select:focus{outline:none;border-color:var(--brand)}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th,td{text-align:left;padding:.55rem .5rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.pill{display:inline-block;font-size:.7rem;font-weight:700;padding:.15rem .5rem;border-radius:999px}
+.pill.booked{background:rgba(95,115,80,.14);color:var(--brand)}
+.pill.cancelled{background:#f0e6e3;color:#a23b28}
+.pill.enquiry{background:rgba(195,154,118,.2);color:#8a6b3f}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.muted{color:var(--muted);font-size:.85rem}
+.mode{font-size:.78rem;padding:.3rem .7rem;border-radius:999px;background:var(--soft);color:var(--muted)}
+#login{max-width:360px;margin:12vh auto}
+.tabs{display:flex;gap:8px;margin:18px 0;flex-wrap:wrap}
+.tab{padding:.5rem 1rem;border-radius:999px;cursor:pointer;font-weight:600;font-size:.9rem;border:1.5px solid var(--line);background:#fff}
+.tab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.hidden{display:none}
+a.email{color:var(--brand)}
+.wk{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.wk b{width:44px;display:inline-block}
+</style>
+</head>
+<body>
+
+<div id="login" class="card">
+  <div class="logo" style="margin-bottom:14px"><img src="logo-header.png" alt="PongLiTation" style="height:40px"></div>
+  <h1 style="margin-bottom:4px">Owner Dashboard</h1>
+  <p class="muted" style="margin-bottom:14px">Enter your password to manage bookings.</p>
+  <div class="row">
+    <input id="pw" type="password" placeholder="Password" style="flex:1" onkeydown="if(event.key==='Enter')login()">
+    <button class="btn" onclick="login()">Enter</button>
+  </div>
+  <p id="loginErr" class="muted" style="color:#c0553f;margin-top:10px"></p>
+</div>
+
+<div id="app" class="hidden">
+  <header><div class="wrap">
+    <div class="logo"><img src="logo-header.png" alt="PongLiTation"><span>Dashboard</span></div>
+    <div class="row"><span id="mode" class="mode"></span><button class="btn ghost sm" onclick="logout()">Log out</button></div>
+  </div></header>
+
+  <div class="wrap">
+    <div class="tabs">
+      <div class="tab on" data-tab="bookings" onclick="tab('bookings')">Bookings</div>
+      <div class="tab" data-tab="pricing" onclick="tab('pricing')">Prices & services</div>
+      <div class="tab" data-tab="hours" onclick="tab('hours')">Hours & days off</div>
+      <div class="tab" data-tab="emails" onclick="tab('emails')">Emails</div>
+    </div>
+
+    <section id="tab-bookings">
+      <div class="row" style="justify-content:space-between">
+        <h2 style="margin:0">Bookings</h2>
+        <button class="btn ghost sm" onclick="load()">Refresh</button>
+      </div>
+      <div class="card"><div id="bookings"></div></div>
+    </section>
+
+    <section id="tab-pricing" class="hidden">
+      <h2>Prices & services</h2>
+      <p class="muted">Change a price or description and hit Save — it updates the live site instantly.</p>
+      <div id="services" class="grid"></div>
+    </section>
+
+    <section id="tab-hours" class="hidden">
+      <h2>Weekly hours</h2>
+      <p class="muted">Comma-separated times, e.g. <i>2:00 PM, 3:00 PM, 4:00 PM</i>. Leave blank to close that day.</p>
+      <div class="card" id="schedule"></div>
+      <h2>Days off</h2>
+      <p class="muted">Block a specific date (holiday, vacation) so no one can book it.</p>
+      <div class="card">
+        <div class="row"><input id="blockDate" type="date"><button class="btn sm" onclick="block()">Block date</button></div>
+        <div id="blocked" style="margin-top:12px"></div>
+      </div>
+    </section>
+
+    <section id="tab-emails" class="hidden">
+      <h2>Automated emails</h2>
+      <p class="muted" id="emailNote"></p>
+      <div class="card"><div id="outbox"></div></div>
+    </section>
+  </div>
+</div>
+
+<script>
+let S=null;
+async function api(path,opts){ const r=await fetch(path,Object.assign({headers:{'Content-Type':'application/json'}},opts)); return r; }
+async function login(){
+  const pw=document.getElementById('pw').value;
+  const r=await api('/admin/login',{method:'POST',body:JSON.stringify({password:pw})});
+  if(r.ok){ document.getElementById('login').classList.add('hidden'); document.getElementById('app').classList.remove('hidden'); load(); }
+  else document.getElementById('loginErr').textContent='Wrong password, try again.';
+}
+async function logout(){ await api('/admin/logout',{method:'POST'}); location.reload(); }
+
+async function load(){
+  const r=await api('/admin/api/state'); if(!r.ok){ location.reload(); return; }
+  S=await r.json();
+  document.getElementById('mode').textContent = S.emailMode==='smtp'?'Live email: ON':'Email: preview mode';
+  renderBookings(); renderServices(); renderSchedule(); renderBlocked(); loadOutbox();
+}
+
+function renderBookings(){
+  const rows=S.bookings;
+  if(!rows.length){ document.getElementById('bookings').innerHTML='<p class="muted">No bookings yet.</p>'; return; }
+  document.getElementById('bookings').innerHTML=`
+    <table><thead><tr><th>Ref</th><th>Service</th><th>When (CT)</th><th>Client</th><th>Status</th><th></th></tr></thead>
+    <tbody>${rows.map(b=>`
+      <tr>
+        <td><b>${b.ref}</b></td>
+        <td>${b.service_name}${b.is_enquiry?' <span class="pill enquiry">enquiry</span>':''}</td>
+        <td>${b.date?b.date:'—'}${b.time?'<br>'+b.time:''}</td>
+        <td>${esc(b.name)}<br><a class="email" href="mailto:${esc(b.email)}">${esc(b.email)}</a>${b.phone?'<br>'+esc(b.phone):''}${b.notes?'<br><span class="muted">'+esc(b.notes)+'</span>':''}</td>
+        <td><span class="pill ${b.status}">${b.status}</span>${b.reminder_sent?'<br><span class="muted">reminded</span>':''}</td>
+        <td>${b.status==='booked'?`<button class="btn danger sm" onclick="cancel(${b.id})">Cancel</button>`:''}</td>
+      </tr>`).join('')}</tbody></table>`;
+}
+async function cancel(id){ if(!confirm('Cancel this booking?'))return; await api('/admin/api/booking/'+id+'/cancel',{method:'POST'}); load(); }
+
+function renderServices(){
+  document.getElementById('services').innerHTML=Object.entries(S.services).map(([k,v])=>`
+    <div class="card">
+      <b style="font-family:Sora">${v.name}</b>
+      <div class="muted" style="margin:6px 0">${v.type==='enquiry'?'Enquiry':'Bookable'}</div>
+      <div class="row"><span>$</span><input id="p_${k}" type="number" value="${v.price}" style="width:90px">
+        <input id="u_${k}" value="${esc(v.unit)}" style="width:100px" title="unit"></div>
+      <input id="d_${k}" value="${esc(v.desc)}" style="width:100%;margin-top:8px" title="description">
+      <button class="btn sm" style="margin-top:10px" onclick="saveService('${k}')">Save</button>
+      <span id="sv_${k}" class="muted"></span>
+    </div>`).join('');
+}
+async function saveService(k){
+  const body={key:k,price:document.getElementById('p_'+k).value,unit:document.getElementById('u_'+k).value,desc:document.getElementById('d_'+k).value};
+  const r=await api('/admin/api/service',{method:'POST',body:JSON.stringify(body)});
+  document.getElementById('sv_'+k).textContent = r.ok?' ✓ saved':' error';
+  if(r.ok){ S.services=(await r.json()).services; setTimeout(()=>document.getElementById('sv_'+k).textContent='',1500); }
+}
+
+const DOW=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+function renderSchedule(){
+  document.getElementById('schedule').innerHTML=DOW.map((name,i)=>`
+    <div class="wk"><b>${name.slice(0,3)}</b>
+      <input id="sch_${i}" value="${(S.schedule[i]||[]).join(', ')}" style="flex:1;min-width:200px">
+      <button class="btn sm" onclick="saveDay(${i})">Save</button>
+      <span id="sd_${i}" class="muted"></span></div>`).join('');
+}
+async function saveDay(i){
+  const times=document.getElementById('sch_'+i).value.split(',').map(s=>s.trim()).filter(Boolean);
+  const r=await api('/admin/api/schedule',{method:'POST',body:JSON.stringify({weekday:i,times})});
+  document.getElementById('sd_'+i).textContent=r.ok?' ✓':' error';
+  if(r.ok){ S.schedule=(await r.json()).schedule; setTimeout(()=>document.getElementById('sd_'+i).textContent='',1200); }
+}
+
+function renderBlocked(){
+  const list=S.blockedDates||[];
+  document.getElementById('blocked').innerHTML = list.length
+    ? list.sort().map(d=>`<span class="pill enquiry" style="margin:3px">${d} <a href="#" onclick="unblock('${d}');return false" style="color:inherit">✕</a></span>`).join('')
+    : '<span class="muted">No days blocked.</span>';
+}
+async function block(){ const d=document.getElementById('blockDate').value; if(!d)return;
+  await api('/admin/api/block',{method:'POST',body:JSON.stringify({date:d,blocked:true})}); load(); }
+async function unblock(d){ await api('/admin/api/block',{method:'POST',body:JSON.stringify({date:d,blocked:false})}); load(); }
+
+async function loadOutbox(){
+  const r=await api('/admin/api/outbox'); const data=await r.json();
+  document.getElementById('emailNote').textContent = data.emailMode==='smtp'
+    ? 'Live email is ON — confirmations and reminders are being sent to clients automatically.'
+    : 'Preview mode: every confirmation & reminder is generated and saved here so you can see exactly what clients receive. Add your email credentials to switch to live sending.';
+  const files=data.files||[];
+  document.getElementById('outbox').innerHTML = files.length
+    ? files.map(f=>`<div style="padding:.4rem 0;border-bottom:1px solid var(--line)"><a class="email" href="/admin/api/outbox/${f}" target="_blank">${f.replace(/_/g,' ').replace('.html','')}</a></div>`).join('')
+    : '<p class="muted">No emails yet — make a test booking and it will appear here.</p>';
+}
+
+function tab(name){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t.dataset.tab===name));
+  ['bookings','pricing','hours','emails'].forEach(n=>document.getElementById('tab-'+n).classList.toggle('hidden',n!==name));
+}
+function esc(s){ return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+// auto-enter if already authenticated
+api('/admin/api/state').then(r=>{ if(r.ok){ document.getElementById('login').classList.add('hidden'); document.getElementById('app').classList.remove('hidden'); load(); } });
+</script>
+</body>
+</html>
