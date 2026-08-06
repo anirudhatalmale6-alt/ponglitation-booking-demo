@@ -215,6 +215,9 @@ async function runReminders() {
 setInterval(runReminders, 15 * 60 * 1000);
 setTimeout(runReminders, 4000);
 
+// Friendly URLs for the owner dashboard.
+app.get(['/admin', '/dashboard'], (_req, res) => res.redirect('/admin.html'));
+
 app.get('/healthz', (_req, res) => res.json({ ok: true, emailMode }));
 
 app.listen(CONFIG.port, () => {
