@@ -5,7 +5,9 @@ import { mkdirSync } from 'fs';
 import { SEED_SERVICES, SEED_SCHEDULE } from './config.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const dataDir = join(__dirname, '..', 'data');
+// DATA_DIR lets the database live on a persistent disk in production
+// (e.g. a Render disk mounted at /var/data) so bookings survive restarts.
+export const dataDir = process.env.DATA_DIR || join(__dirname, '..', 'data');
 mkdirSync(dataDir, { recursive: true });
 
 export const db = new Database(join(dataDir, 'pongli.db'));

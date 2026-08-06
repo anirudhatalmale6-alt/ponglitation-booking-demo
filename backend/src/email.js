@@ -6,7 +6,8 @@ import { CONFIG } from './config.js';
 import { prettyDate } from './time.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const outbox = join(__dirname, '..', 'data', 'outbox');
+const dataDir = process.env.DATA_DIR || join(__dirname, '..', 'data');
+const outbox = join(dataDir, 'outbox');
 mkdirSync(outbox, { recursive: true });
 
 // Real SMTP if configured; otherwise a "file" transport that writes each email

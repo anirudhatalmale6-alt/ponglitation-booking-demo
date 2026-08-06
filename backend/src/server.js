@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { readdirSync, readFileSync } from 'fs';
 import { CONFIG } from './config.js';
-import { db, getSetting, setSetting } from './db.js';
+import { db, getSetting, setSetting, dataDir } from './db.js';
 import { todayCT, weekdayOf, addDays, isValidDateStr, prettyDate } from './time.js';
 import { sendConfirmation, sendReminder, emailMode } from './email.js';
 
@@ -187,14 +187,14 @@ app.post('/admin/api/copy', requireAdmin, (req, res) => {
 // List generated emails (outbox mode) so the client can preview them.
 app.get('/admin/api/outbox', requireAdmin, (_req, res) => {
   try {
-    const dir = join(__dirname, '..', 'data', 'outbox');
+    const dir = join(dataDir, 'outbox');
     const files = readdirSync(dir).filter((f) => f.endsWith('.html')).sort().reverse().slice(0, 50);
     res.json({ emailMode, files });
   } catch { res.json({ emailMode, files: [] }); }
 });
 app.get('/admin/api/outbox/:file', requireAdmin, (req, res) => {
   const safe = req.params.file.replace(/[^a-z0-9._-]/gi, '');
-  try { res.type('html').send(readFileSync(join(__dirname, '..', 'data', 'outbox', safe), 'utf8')); }
+  try { res.type('html').send(readFileSync(join(dataDir, 'outbox', safe), 'utf8')); }
   catch { res.status(404).send('Not found'); }
 });
 
