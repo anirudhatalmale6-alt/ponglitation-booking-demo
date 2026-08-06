@@ -138,6 +138,13 @@ section.pad{padding:84px 0}
 .feat h4{font-size:1.05rem;margin-bottom:.15rem}
 .feat p{color:var(--muted);font-size:.92rem}
 
+/* inspiration quote */
+.quote-band{max-width:840px;margin:0 auto;text-align:center;position:relative;padding:10px 16px}
+.quote-band .q-leaf{font-size:2rem;margin-bottom:20px;opacity:.9}
+.quote-band blockquote{font-family:var(--display);font-weight:700;font-size:clamp(1.5rem,3.5vw,2.5rem);line-height:1.28;letter-spacing:-.02em;color:var(--ink)}
+.quote-band blockquote .em{color:var(--brand)}
+.quote-band figcaption{margin-top:24px;font-family:var(--display);font-weight:700;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;color:var(--brand)}
+
 /* footer */
 footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30px;margin-top:20px}
 .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:30px;margin-bottom:34px}
@@ -229,7 +236,7 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
       <a href="#services">Sessions</a>
       <a href="#how">How it works</a>
       <a href="#story">Our story</a>
-      <a href="#manage">Dashboard</a>
+      <a href="#quote">Inspiration</a>
     </nav>
     <div class="nav-cta">
       <button class="btn btn-primary" onclick="openBooking()">Book now</button>
@@ -343,30 +350,13 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
   </div>
 </section>
 
-<section class="pad" id="manage" style="background:var(--soft)">
+<section class="pad" id="quote" style="background:radial-gradient(760px 320px at 50% 0%,rgba(169,189,151,.20),transparent 62%),var(--soft)">
   <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">You're in control</span>
-      <h2>Manage everything, no code</h2>
-      <p>A simple dashboard to update your slots, prices, and copy anytime — changes appear on the site instantly.</p>
-    </div>
-    <div class="dash">
-      <div class="dash-ui">
-        <div class="bar"><i></i><i></i><i></i></div>
-        <div class="dash-row"><span>🗓️ &nbsp;Weekly availability</span><span class="toggle"></span></div>
-        <div class="dash-row"><span>🏓 &nbsp;Table-Tennis Lesson</span><b>$70</b></div>
-        <div class="dash-row"><span>🎤 &nbsp;Motivational Session</span><b>$70</b></div>
-        <div class="dash-row"><span>🌱 &nbsp;Motivational Groups</span><b>$40/hr</b></div>
-        <div class="dash-row"><span>📖 &nbsp;Book Club</span><b>$30/mo</b></div>
-        <div class="dash-row"><span>⏰ &nbsp;Auto reminders</span><span class="toggle"></span></div>
-      </div>
-      <div>
-        <div class="feat"><div class="fic">🎚️</div><div><h4>Update slots & pricing</h4><p>Open or close times and change prices in seconds.</p></div></div>
-        <div class="feat"><div class="fic">✉️</div><div><h4>Automated emails</h4><p>Confirmations and reminders fire on their own — zero manual follow-up.</p></div></div>
-        <div class="feat"><div class="fic">✍️</div><div><h4>Edit copy anytime</h4><p>Change headlines and descriptions without touching code.</p></div></div>
-        <div class="feat"><div class="fic">📈</div><div><h4>Built-in SEO</h4><p>So new students and anyone searching for growth can find you on Google.</p></div></div>
-      </div>
-    </div>
+    <figure class="quote-band">
+      <div class="q-leaf">🌿</div>
+      <blockquote>You were never planted to stay buried. Break through the hard ground and <span class="em">rise</span> — you are stronger than what tried to bury you, and you are <span class="em">never growing alone</span>.</blockquote>
+      <figcaption>— PongLiTation</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -386,7 +376,7 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
       <div>
         <h5>Get started</h5>
         <a href="#" onclick="openBooking();return false">Book a session</a>
-        <a href="#manage">Owner dashboard</a>
+        <a href="https://ponglitation.com/admin.html">Owner login</a>
         <a href="#how">How it works</a>
       </div>
     </div>
