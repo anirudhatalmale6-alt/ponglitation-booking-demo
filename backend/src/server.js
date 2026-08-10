@@ -147,6 +147,12 @@ app.post('/admin/api/booking/:id/cancel', requireAdmin, (req, res) => {
   res.json({ ok: true });
 });
 
+// Permanently remove a cancelled/test booking so the list stays clean.
+app.post('/admin/api/booking/:id/delete', requireAdmin, (req, res) => {
+  db.prepare('DELETE FROM bookings WHERE id=?').run(req.params.id);
+  res.json({ ok: true });
+});
+
 app.post('/admin/api/service', requireAdmin, (req, res) => {
   const { key, price, name, unit, desc } = req.body || {};
   const services = getSetting('services');
@@ -218,7 +224,8 @@ setTimeout(runReminders, 4000);
 // Friendly URLs for the owner dashboard.
 app.get(['/admin', '/dashboard'], (_req, res) => res.redirect('/admin.html'));
 
-app.get('/healthz', (_req, res) => res.json({ ok: true, emailMode }));
+app.get('/healthz', (_req, res) =>
+  res.json({ ok: true, emailMode, dataDir, persistent: Boolean(process.env.DATA_DIR) }));
 
 app.listen(CONFIG.port, () => {
   console.log(`PongLiTation booking engine on :${CONFIG.port} (email: ${emailMode})`);

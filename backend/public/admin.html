@@ -135,10 +135,13 @@ function renderBookings(){
         <td>${b.date?b.date:'—'}${b.time?'<br>'+b.time:''}</td>
         <td>${esc(b.name)}<br><a class="email" href="mailto:${esc(b.email)}">${esc(b.email)}</a>${b.phone?'<br>'+esc(b.phone):''}${b.notes?'<br><span class="muted">'+esc(b.notes)+'</span>':''}</td>
         <td><span class="pill ${b.status}">${b.status}</span>${b.reminder_sent?'<br><span class="muted">reminded</span>':''}</td>
-        <td>${b.status==='booked'?`<button class="btn danger sm" onclick="cancel(${b.id})">Cancel</button>`:''}</td>
+        <td>${b.status==='booked'
+              ?`<button class="btn danger sm" onclick="cancel(${b.id})">Cancel</button>`
+              :`<button class="btn sm" onclick="remove(${b.id})">Remove</button>`}</td>
       </tr>`).join('')}</tbody></table>`;
 }
 async function cancel(id){ if(!confirm('Cancel this booking?'))return; await api('/admin/api/booking/'+id+'/cancel',{method:'POST'}); load(); }
+async function remove(id){ if(!confirm('Remove this from the list for good?'))return; await api('/admin/api/booking/'+id+'/delete',{method:'POST'}); load(); }
 
 function renderServices(){
   document.getElementById('services').innerHTML=Object.entries(S.services).map(([k,v])=>`
