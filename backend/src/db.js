@@ -67,6 +67,6 @@ if (getSetting('blockedDates') === null) setSetting('blockedDates', []);
 if (getSetting('copy') === null) {
   setSetting('copy', {
     heroTitle: 'Grow through whatever you go through.',
-    heroLead: 'Motivational sessions and table-tennis lessons for anyone rising through something hard. Break the chains. Keep growing. And never do it alone.',
+    heroLead: 'Motivational sessions and table-tennis coaching for anyone rising through something hard. Power through it. Keep growing. And never do it alone.',
   });
 }

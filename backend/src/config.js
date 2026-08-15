@@ -21,10 +21,10 @@ export const CONFIG = {
 // Default catalogue — seeded into the DB on first run, then editable from the
 // admin dashboard (no code needed).
 export const SEED_SERVICES = {
-  lesson:     { name: 'Table-Tennis Lesson', price: 70, unit: '60 min', type: 'timed',
-                desc: 'One-on-one coaching, all levels' },
-  motivation: { name: 'Motivational Session', price: 70, unit: '60 min', type: 'timed',
+  motivation: { name: 'Motivational Session', price: 45, unit: '60 min', type: 'timed',
                 desc: 'One-on-one mindset & momentum' },
+  lesson:     { name: 'Book Leo', price: 70, unit: '60 min', type: 'timed',
+                desc: 'One-on-one at the table with Leo, all levels' },
   group:      { name: 'Motivational Group', price: 40, unit: 'per hour', type: 'enquiry',
                 desc: 'Grow together, in a group setting' },
   bookclub:   { name: 'Book Club', price: 30, unit: 'per month', type: 'enquiry',

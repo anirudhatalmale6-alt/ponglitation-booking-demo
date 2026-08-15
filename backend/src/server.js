@@ -165,6 +165,26 @@ app.post('/admin/api/service', requireAdmin, (req, res) => {
   res.json({ ok: true, services });
 });
 
+// Replace the whole catalogue at once — also lets the running order change,
+// since the site lists services in the order they are stored.
+app.post('/admin/api/services', requireAdmin, (req, res) => {
+  const incoming = req.body || {};
+  const keys = Object.keys(incoming);
+  if (!keys.length) return res.status(400).json({ error: 'No services supplied.' });
+  const clean = {};
+  for (const k of keys) {
+    const v = incoming[k] || {};
+    if (!v.name || !v.unit || !['timed', 'enquiry'].includes(v.type))
+      return res.status(400).json({ error: `Bad service: ${k}` });
+    clean[k] = {
+      name: String(v.name), price: Number(v.price), unit: String(v.unit),
+      type: v.type, desc: String(v.desc || ''),
+    };
+  }
+  setSetting('services', clean);
+  res.json({ ok: true, services: clean });
+});
+
 app.post('/admin/api/schedule', requireAdmin, (req, res) => {
   const { weekday, times } = req.body || {};
   const schedule = getSetting('schedule');
