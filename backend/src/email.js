@@ -50,6 +50,21 @@ const shell = (body) => `
 </div>`;
 
 const firstName = (n) => (n || '').trim().split(' ')[0] || 'there';
+const esc = (s) => String(s ?? '').replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+
+// The answers from the booking form, skipping anything left blank.
+function detailRows(b) {
+  const rows = [
+    ['Booking ref', b.ref],
+    ['What', b.service_name],
+    ['Booking Leo for', b.purpose],
+    ['Organization', b.organization],
+    b.date ? ['When', `${prettyDate(b.date)}${b.time ? ` at ${b.time} ${CONFIG.tzLabel}` : ''}`] : null,
+    ['Location', b.location_mode],
+    b.participants > 1 ? ['Participants', b.participants] : null,
+  ].filter((r) => r && r[1]);
+  return rows.map(([k, v]) => `<div><b>${k}:</b> ${esc(v)}</div>`).join('');
+}
 
 export function confirmationEmail(b) {
   const when = b.is_enquiry
@@ -64,9 +79,7 @@ export function confirmationEmail(b) {
         : `Your <b>${b.service_name}</b> is confirmed ${when}.`}
     </p>
     <div style="background:#f5f2ea;border-radius:12px;padding:16px 18px;margin:18px 0;font-size:14px">
-      <div><b>Booking ref:</b> ${b.ref}</div>
-      <div><b>What:</b> ${b.service_name}</div>
-      ${b.date ? `<div><b>When:</b> ${prettyDate(b.date)}${b.time ? ` at ${b.time} ${CONFIG.tzLabel}` : ''}</div>` : ''}
+      ${detailRows(b)}
     </div>
     ${b.is_enquiry ? '' :
       `<p style="font-size:14px;color:#7a776d">⏰ You'll get an automatic reminder before your session. Just reply to this email if you need to reschedule.</p>`}
@@ -92,6 +105,36 @@ export function reminderEmail(b) {
     <p style="font-size:14px;color:#7a776d">Need to move it? Just reply to this email.</p>
     <p style="font-size:15px;margin-top:18px">See you soon,<br>— PongLiTation</p>`;
   return { subject: `Reminder: your ${b.service_name} is coming up`, html: shell(body) };
+}
+
+// Sent to Leo so an enquiry never sits unseen in the dashboard.
+export function ownerAlertEmail(b) {
+  const kind = b.is_enquiry ? 'New enquiry' : 'New booking';
+  const body = `
+    <p style="font-family:Sora,Arial,sans-serif;font-weight:700;font-size:18px;margin:0 0 12px">
+      ${kind}: ${esc(b.service_name)}</p>
+    <div style="background:#f5f2ea;border-radius:12px;padding:16px 18px;margin:4px 0 18px;font-size:14px">
+      ${detailRows(b)}
+    </div>
+    <div style="font-size:14px;line-height:1.7">
+      <div><b>Name:</b> ${esc(b.name)}</div>
+      <div><b>Email:</b> <a href="mailto:${esc(b.email)}">${esc(b.email)}</a></div>
+      ${b.phone ? `<div><b>Phone:</b> ${esc(b.phone)}</div>` : ''}
+      ${b.notes ? `<div style="margin-top:8px"><b>Message:</b><br>${esc(b.notes)}</div>` : ''}
+    </div>
+    <p style="font-size:13px;color:#7a776d;margin-top:18px">
+      Manage it at <a href="https://ponglitation.com/admin">ponglitation.com/admin</a>. Reply to this
+      email to reach ${esc(b.name)} — their address is above.</p>`;
+  return {
+    subject: `${kind} — ${b.service_name} (${b.ref})`,
+    html: shell(body),
+  };
+}
+
+export async function sendOwnerAlert(b) {
+  if (!CONFIG.ownerEmail) return { mode: 'skipped' };
+  const { subject, html } = ownerAlertEmail(b);
+  return deliver(CONFIG.ownerEmail, subject, html);
 }
 
 export async function sendConfirmation(b) {

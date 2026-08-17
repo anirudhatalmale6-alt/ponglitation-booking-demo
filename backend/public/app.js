@@ -2,14 +2,30 @@
 document.getElementById('yr').textContent = new Date().getFullYear();
 
 let CFG = null;
-let state = { step:1, service:null, date:null, dateLabel:null, time:null, slots:[], loadingSlots:false,
-              name:'', email:'', phone:'', notes:'', calMonth:null, result:null, error:null };
+const blankState = () => ({
+  step:1, service:null, date:null, dateLabel:null, time:null, slots:[], loadingSlots:false,
+  name:'', email:'', phone:'', notes:'', calMonth:null, result:null, error:null,
+  organization:'', purpose:'', purposeOther:false, locationMode:'In person', participants:1,
+});
+let state = blankState();
 
 async function loadConfig(){
   try{ const r = await fetch('/api/config'); CFG = await r.json(); }
   catch(e){ console.error('config load failed', e); }
 }
-const cfgReady = loadConfig();
+// The topic chips are in the HTML for search engines; once the config arrives we
+// repaint them so the dashboard stays the single source of truth.
+function paintTopics(){
+  const t = topics();
+  [['chips-speaking', 'topic-title-0', 0], ['chips-schools', 'topic-title-1', 1]].forEach(([cid, tid, i]) => {
+    const g = t[i]; if(!g) return;
+    const box = document.getElementById(cid);
+    if(box && (g.items||[]).length) box.innerHTML = g.items.map(x=>`<span class="chip">${esc(x)}</span>`).join('');
+    const title = document.getElementById(tid);
+    if(title && g.group) title.textContent = g.group;
+  });
+}
+const cfgReady = loadConfig().then(paintTopics);
 
 function services(){ return (CFG && CFG.services) || {}; }
 function scheduleFor(dow){ return (CFG && CFG.schedule && CFG.schedule[dow]) || []; }
@@ -17,13 +33,26 @@ function blocked(){ return (CFG && CFG.blockedDates) || []; }
 function todayCT(){ return (CFG && CFG.today) || new Date().toISOString().slice(0,10); }
 function tz(){ return (CFG && CFG.tz) || 'CT'; }
 function isEnquiry(){ const s=services()[state.service]; return s ? s.type==='enquiry' : false; }
+function topics(){ return (CFG && CFG.topics) || []; }
+function allTopics(){ return topics().reduce((a,g)=>a.concat(g.items||[]),[]); }
+
+// Sensible starting answer for "What are you booking Leo for?" per service.
+const PURPOSE_BY_SERVICE = { motivation:'Motivational session', lesson:'Table tennis coaching with Leo',
+                             group:'Motivational group', bookclub:'Book club' };
+function defaultPurpose(k){
+  const guess = PURPOSE_BY_SERVICE[k];
+  return guess && allTopics().includes(guess) ? guess : '';
+}
 
 function startMonth(){ const [y,m]=todayCT().split('-').map(Number); return {y, m:m-1}; }
 
 async function openBooking(svc){
   await cfgReady;
-  state = { step:1, service:svc||null, date:null, dateLabel:null, time:null, slots:[], loadingSlots:false,
-            name:'', email:'', phone:'', notes:'', calMonth:startMonth(), result:null, error:null };
+  state = blankState();
+  state.service = svc || null;
+  state.calMonth = startMonth();
+  // Pre-fill the "what for" answer when they came in from a specific card.
+  state.purpose = defaultPurpose(state.service);
   if(svc) state.step=2;
   document.getElementById('overlay').classList.add('open');
   document.body.style.overflow='hidden';
@@ -42,7 +71,7 @@ function render(){
   const foot=document.getElementById('mFoot');
   document.getElementById('mTitle').textContent =
      s===4 ? (state.result&&state.result.isEnquiry?'Request sent':'Confirmed')
-           : (isEnquiry()?'Enquire about a group':'Book a session');
+           : (isEnquiry()?'Send a request':'Book a session');
 
   if(s===1){
     const svcs=services();
@@ -63,7 +92,7 @@ function render(){
         <div class="step-title">Preferred date</div>
         <div class="step-sub">Pick a preferred start date — we&rsquo;ll confirm the details by email.</div>
         ${calendarHTML()}
-        <div class="notice" style="margin-top:14px">Group sessions are shaped around you. No time slot needed — just a preferred date to start the conversation.</div>`;
+        <div class="notice" style="margin-top:14px">Talks, workshops and groups are shaped around you. No time slot needed — just a preferred date to start the conversation.</div>`;
     } else {
       area.innerHTML = `
         <div class="step-title">Pick a date & time</div>
@@ -82,9 +111,17 @@ function render(){
       <div class="field"><label>Full name</label><input value="${esc(state.name)}" placeholder="Jane Doe" oninput="state.name=this.value"></div>
       <div class="field"><label>Email</label><input type="email" value="${esc(state.email)}" placeholder="jane@email.com" oninput="state.email=this.value"></div>
       <div class="field"><label>Phone (optional)</label><input value="${esc(state.phone)}" placeholder="(555) 000-0000" oninput="state.phone=this.value"></div>
-      <div class="field"><label>${isEnquiry()?'Tell us about your group':'Notes (optional)'}</label><textarea rows="3" placeholder="${isEnquiry()?'Group size, what you&rsquo;re hoping to get out of it…':'Anything I should know?'}" oninput="state.notes=this.value">${esc(state.notes)}</textarea></div>`;
+      <div class="field"><label>Organization (optional)</label><input value="${esc(state.organization)}" placeholder="School, club, company or team" oninput="state.organization=this.value"></div>
+      ${purposeField()}
+      <div class="field"><label>Location</label>
+        <select onchange="state.locationMode=this.value">
+          ${['In person','Virtual','Either works'].map(o=>`<option ${state.locationMode===o?'selected':''}>${o}</option>`).join('')}
+        </select></div>
+      <div class="field"><label>Number of participants</label>
+        <input type="number" min="1" value="${Number(state.participants)||1}" oninput="state.participants=this.value"></div>
+      <div class="field"><label>Message${isEnquiry()?'':' (optional)'}</label><textarea rows="3" placeholder="${isEnquiry()?'Dates, audience, what you&rsquo;re hoping Leo covers…':'Anything I should know?'}" oninput="state.notes=this.value">${esc(state.notes)}</textarea></div>`;
     foot.innerHTML = `<button class="btn btn-ghost" onclick="prev()">Back</button>
-      <button class="btn btn-primary" id="confirmBtn" onclick="submitBooking()">Confirm booking</button>`;
+      <button class="btn btn-primary" id="confirmBtn" onclick="submitBooking()">${isEnquiry()?'Send request':'Confirm booking'}</button>`;
   }
   else if(s===4){
     const r=state.result||{};
@@ -108,6 +145,30 @@ function render(){
       </div>`;
     foot.innerHTML = `<button class="btn btn-primary" style="flex:1;justify-content:center" onclick="closeBooking()">Done</button>`;
   }
+}
+
+/* ---------- "what are you booking Leo for?" ---------- */
+function purposeField(){
+  const groups = topics();
+  return `
+    <div class="field">
+      <label>What are you booking Leo for?</label>
+      <select onchange="pickPurpose(this.value)">
+        <option value="" ${!state.purpose && !state.purposeOther?'selected':''}>Choose one…</option>
+        ${groups.map(g=>`<optgroup label="${esc(g.group)}">${(g.items||[]).map(i=>
+          `<option value="${esc(i)}" ${!state.purposeOther && state.purpose===i?'selected':''}>${esc(i)}</option>`
+        ).join('')}</optgroup>`).join('')}
+        <option value="__other" ${state.purposeOther?'selected':''}>Something else…</option>
+      </select>
+      ${state.purposeOther
+        ? `<input style="margin-top:8px" placeholder="Tell us in a few words" value="${esc(state.purpose)}" oninput="state.purpose=this.value">`
+        : ''}
+    </div>`;
+}
+function pickPurpose(v){
+  if(v==='__other'){ state.purposeOther=true; state.purpose=''; }
+  else { state.purposeOther=false; state.purpose=v; }
+  render();
 }
 
 /* ---------- calendar ---------- */
@@ -183,11 +244,14 @@ function prev(){ if(state.step>1){ state.error=null; state.step--; render(); } }
 async function submitBooking(){
   state.error=null;
   if(!state.name || !state.email){ state.error='Please add your name and email.'; render(); return; }
+  if(!state.purpose.trim()){ state.error='Please tell us what you are booking Leo for.'; render(); return; }
   const btn=document.getElementById('confirmBtn'); if(btn){ btn.textContent='Booking…'; btn.disabled=true; }
   try{
     const r=await fetch('/api/book',{ method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ service:state.service, date:state.date, time:state.time,
-        name:state.name, email:state.email, phone:state.phone, notes:state.notes }) });
+        name:state.name, email:state.email, phone:state.phone, notes:state.notes,
+        organization:state.organization, purpose:state.purpose,
+        locationMode:state.locationMode, participants:state.participants }) });
     const data=await r.json();
     if(!r.ok){ state.error=data.error||'Something went wrong.'; render();
       if(r.status===409){ /* slot taken: bounce back to time picker */ state.step=2; state.time=null; if(state.date) pickDate(state.date,state.dateLabel); }

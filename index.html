@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>PongLiTation — Motivational Sessions & Table-Tennis Coaching</title>
-<meta name="description" content="PongLiTation — motivational sessions and table-tennis coaching rooted in growth through adversity. Book online with real-time availability, instant confirmations, and automatic reminders. You are not alone." />
-<meta name="keywords" content="motivational sessions, motivational speaker nashville, mindset coaching, table tennis lessons, ping pong coaching, resilience, personal growth, motivational groups, book clubs" />
+<title>PongLiTation — Motivational Speaking, Sessions & Table Tennis</title>
+<meta name="description" content="PongLiTation — motivational speaking, one-on-one sessions, school and youth workshops, plus table tennis with Leo. Book online with real-time availability, instant confirmations and automatic reminders. You are not alone." />
+<meta name="keywords" content="motivational speaker nashville, motivational sessions, youth motivational speaker, school assembly speaker, confidence building, athlete mindset, overcoming setbacks, youth entrepreneurship, youth workshops, table tennis clinics, table tennis demonstrations, community events, mindset coaching, table tennis lessons" />
 <meta property="og:title" content="PongLiTation — Rooted. Rising. Unstoppable." />
-<meta property="og:description" content="Motivational sessions and table-tennis coaching that help you power through adversity. Book online in a few clicks." />
+<meta property="og:description" content="Motivational speaking, mindset sessions and youth workshops that help people power through adversity — plus table tennis with Leo. Book online in a few clicks." />
 <meta property="og:type" content="website" />
 <meta property="og:image" content="logo.png" />
 <link rel="icon" type="image/png" href="favicon.png" />
@@ -20,7 +20,7 @@
   "@context": "https://schema.org",
   "@type": "SportsActivityLocation",
   "name": "PongLiTation",
-  "description": "Motivational sessions and table-tennis coaching rooted in growth through adversity.",
+  "description": "Motivational speaking, mindset sessions, school and youth workshops, and table-tennis coaching rooted in growth through adversity.",
   "areaServed": "United States",
   "priceRange": "$$"
 }
@@ -189,8 +189,8 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
 .slot.taken{opacity:.35;text-decoration:line-through;cursor:not-allowed}
 .field{margin-bottom:14px}
 .field label{display:block;font-size:.85rem;font-weight:600;margin-bottom:5px}
-.field input,.field textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:.7rem .85rem;font-family:inherit;font-size:.95rem}
-.field input:focus,.field textarea:focus{outline:none;border-color:var(--brand)}
+.field input,.field textarea,.field select{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:.7rem .85rem;font-family:inherit;font-size:.95rem;background:#fff;color:inherit}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--brand)}
 .summary{background:var(--soft);border-radius:12px;padding:14px 16px;margin-bottom:16px;font-size:.92rem}
 .summary div{display:flex;justify-content:space-between;padding:3px 0}
 .summary div b{font-family:var(--display)}
@@ -207,9 +207,23 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
 .email-preview .eb b{font-family:var(--display)}
 .notice{background:rgba(169,189,151,.20);border:1px solid rgba(169,189,151,.55);color:#55603f;font-size:.82rem;padding:.7rem .9rem;border-radius:10px;text-align:center}
 
+
+/* speaking & schools topic panels */
+.topics{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.topic-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px;display:flex;flex-direction:column}
+.topic-card .th{display:flex;align-items:center;gap:13px;margin-bottom:8px}
+.topic-card .th .ic{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-size:1.3rem;margin:0;flex:0 0 auto}
+.topic-card h3{font-size:1.25rem}
+.topic-card>p{color:var(--muted);font-size:.94rem;margin-bottom:16px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px;flex:1;align-content:flex-start}
+.chip{background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:.4rem .85rem;font-size:.86rem;font-weight:500}
+.topic-card .chip{background:var(--cream)}
+.muted-note{text-align:center;color:var(--muted);font-size:.92rem;margin-top:26px}
+
 @media(max-width:900px){
   .hero-grid{grid-template-columns:1fr;gap:36px}
   .cards{grid-template-columns:1fr}
+  .topics{grid-template-columns:1fr}
   .steps{grid-template-columns:1fr 1fr}
   .band{grid-template-columns:1fr;padding:34px}
   .dash{grid-template-columns:1fr}
@@ -233,6 +247,7 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
   <div class="wrap nav">
     <a class="logo" href="#top"><img src="logo-header.png" alt="PongLiTation" /></a>
     <nav class="nav-links">
+      <a href="#speaking">Speaking</a>
       <a href="#services">Sessions</a>
       <a href="#how">How it works</a>
       <a href="#story">Our story</a>
@@ -251,13 +266,13 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
     <div>
       <span class="eyebrow">Rooted · Rising · Unstoppable</span>
       <h1>Grow through <span class="hl">whatever you go through.</span></h1>
-      <p class="lead">Motivational sessions and table-tennis coaching for anyone rising through something hard. Power through it. Keep growing. And never do it alone.</p>
+      <p class="lead">Motivational speaking, one-on-one sessions and youth workshops for anyone rising through something hard &mdash; plus table tennis with Leo. Power through it. Keep growing. And never do it alone.</p>
       <div class="hero-cta">
         <button class="btn btn-primary" onclick="openBooking()">Book a session →</button>
-        <a class="btn btn-ghost" href="#services">Explore sessions</a>
+        <a class="btn btn-ghost" href="#speaking">Book Leo to speak</a>
       </div>
       <div class="trust">
-        <div><b>60 min</b><span>1-on-1 sessions</span></div>
+        <div><b>Stages</b><span>Schools · teams · clubs</span></div>
         <div><b>7 days</b><span>Every week · CT</span></div>
         <div><b>0 emails</b><span>Fully automated</span></div>
       </div>
@@ -277,12 +292,57 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
   </div>
 </section>
 
+
+<section class="pad" id="speaking" style="background:var(--soft)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Bring Leo to your people</span>
+      <h2>Speaking, workshops &amp; clinics</h2>
+      <p>Leo speaks to teams, schools, clubs and communities &mdash; the mindset that turns pressure into fuel, told through the PongLiTation journey.</p>
+    </div>
+    <div class="topics">
+      <div class="topic-card">
+        <div class="th">
+          <div class="ic" style="background:rgba(195,154,118,.16);color:var(--brand)">&#127908;</div>
+          <h3 id="topic-title-0">Speaking &amp; Motivation</h3>
+        </div>
+        <p>Keynotes and talks shaped around the moment your audience is actually in.</p>
+        <div class="chips" id="chips-speaking">
+          <span class="chip">Discipline &amp; consistency</span>
+          <span class="chip">Athlete mindset</span>
+          <span class="chip">Overcoming setbacks</span>
+          <span class="chip">Building confidence</span>
+          <span class="chip">Youth entrepreneurship</span>
+          <span class="chip">The PongLiTation journey</span>
+        </div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="openBooking('speaking')">Request a date</button>
+      </div>
+      <div class="topic-card">
+        <div class="th">
+          <div class="ic" style="background:rgba(95,115,80,.13);color:var(--brand)">&#127979;</div>
+          <h3 id="topic-title-1">Schools &amp; Organizations</h3>
+        </div>
+        <p>Hands-on sessions for students, youth programs and community groups.</p>
+        <div class="chips" id="chips-schools">
+          <span class="chip">Table tennis demonstrations</span>
+          <span class="chip">Youth workshops</span>
+          <span class="chip">Motivational sessions</span>
+          <span class="chip">Table tennis clinics</span>
+          <span class="chip">Community events</span>
+        </div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="openBooking('schools')">Request a date</button>
+      </div>
+    </div>
+    <p class="muted-note">Every talk, workshop and clinic is quoted per event &mdash; send the details and Leo comes back to you personally.</p>
+  </div>
+</section>
+
 <section class="pad" id="services">
   <div class="wrap">
     <div class="sec-head">
       <span class="eyebrow">What we offer</span>
       <h2>Pick your Inspiration!</h2>
-      <p>Every booking sends an instant confirmation and an automatic reminder before your session — no follow-up needed.</p>
+      <p>One-on-one and small-group options. Every booking sends an instant confirmation and an automatic reminder before your session — no follow-up needed.</p>
     </div>
     <div class="cards">
       <div class="card">
@@ -320,7 +380,7 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
       <h2>Booking in four steps</h2>
     </div>
     <div class="steps">
-      <div class="step"><div class="n">1</div><h4>Choose a session</h4><p>Table-tennis lesson, motivational session, or a group.</p></div>
+      <div class="step"><div class="n">1</div><h4>Choose a session</h4><p>Speaking, a motivational session, a workshop or time at the table.</p></div>
       <div class="step"><div class="n">2</div><h4>Pick a time</h4><p>See real-time availability and grab a slot.</p></div>
       <div class="step"><div class="n">3</div><h4>Confirm details</h4><p>Book now, pay later — no card required at checkout.</p></div>
       <div class="step"><div class="n">4</div><h4>Get reminders</h4><p>Instant confirmation plus an automatic reminder.</p></div>
@@ -365,13 +425,14 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
     <div class="foot-grid">
       <div>
         <a class="logo foot-logo" href="#top"><img src="logo-header.png" alt="PongLiTation" /></a>
-        <p>Motivational sessions and table-tennis coaching rooted in growth through adversity. You are not alone.</p>
+        <p>Motivational speaking, mindset sessions, youth workshops and table-tennis coaching rooted in growth through adversity. You are not alone.</p>
       </div>
       <div>
         <h5>Sessions</h5>
+        <a href="#speaking">Speaking &amp; Motivation</a>
+        <a href="#speaking">Schools &amp; Organizations</a>
         <a href="#services">Motivational Sessions</a>
         <a href="#services">Book Leo</a>
-        <a href="#services">Group Sessions</a>
       </div>
       <div>
         <h5>Get started</h5>
@@ -409,11 +470,21 @@ document.getElementById('yr').textContent = '2026';
 
 /* ---------- data ---------- */
 const SERVICES = {
-  lesson:     {name:'Book Leo', price:'$70', dur:'60 min', desc:'One-on-one at the table with Leo, all levels'},
-  motivation: {name:'Motivational Session', price:'$45', dur:'60 min', desc:'One-on-one mindset & momentum'},
-  group:      {name:'Motivational Group',   price:'$40', dur:'per hour', desc:'Grow together, in a group setting'},
-  bookclub:   {name:'Book Club',            price:'$30', dur:'per month', desc:'Read, reflect & rise — monthly membership'}
+  motivation: {name:'Motivational Session',    price:'$45',     dur:'60 min', desc:'One-on-one mindset & momentum'},
+  speaking:   {name:'Speaking & Motivation',   price:'Custom',  dur:'talks & keynotes', desc:'Book Leo to speak to your team, club or audience'},
+  schools:    {name:'Schools & Organizations', price:'Custom',  dur:'workshops & clinics', desc:'Youth workshops, clinics, demos & community events'},
+  lesson:     {name:'Book Leo',                price:'$70',     dur:'60 min', desc:'One-on-one at the table with Leo, all levels'},
+  group:      {name:'Motivational Group',      price:'$40',     dur:'per hour', desc:'Grow together, in a group setting'},
+  bookclub:   {name:'Book Club',               price:'$30',     dur:'per month', desc:'Read, reflect & rise — monthly membership'}
 };
+/* answers offered for "What are you booking Leo for?" */
+const TOPICS = [
+  {group:'Speaking & Motivation', items:['Discipline & consistency','Athlete mindset','Overcoming setbacks','Building confidence','Youth entrepreneurship','The PongLiTation journey']},
+  {group:'Schools & Organizations', items:['Table tennis demonstrations','Youth workshops','Motivational sessions','Table tennis clinics','Community events']},
+  {group:'One-on-one & groups', items:['Motivational session','Table tennis coaching with Leo','Motivational group','Book club']}
+];
+const PURPOSE_BY_SERVICE = {motivation:'Motivational session', lesson:'Table tennis coaching with Leo',
+                            group:'Motivational group', bookclub:'Book club'};
 /* Availability (all Central Time / CT):
    Mon & Wed 4–7pm · Tue/Thu/Fri 2–5pm · Sat & Sun 8am–12pm */
 const SCHEDULE = {
@@ -428,10 +499,15 @@ const SCHEDULE = {
 function dowOf(key){const[y,m,d]=key.split('-').map(Number);return new Date(y,m-1,d).getDay();}
 function timesFor(key){return SCHEDULE[dowOf(key)]||[];}
 
-let state = {step:1, service:null, date:null, time:null, name:'', email:'', phone:'', notes:'', calMonth:null};
+const blankState = () => ({step:1, service:null, date:null, time:null, name:'', email:'', phone:'', notes:'', calMonth:null,
+  organization:'', purpose:'', purposeOther:false, locationMode:'In person', participants:1});
+let state = blankState();
 
 function openBooking(svc){
-  state = {step:1, service:svc||null, date:null, time:null, name:'', email:'', phone:'', notes:'', calMonth:startMonth()};
+  state = blankState();
+  state.service = svc||null;
+  state.calMonth = startMonth();
+  state.purpose = PURPOSE_BY_SERVICE[svc] || '';
   if(svc){state.step=2;}
   document.getElementById('overlay').classList.add('open');
   document.body.style.overflow='hidden';
@@ -448,7 +524,26 @@ function startMonth(){const d=new Date(2026,7,1);return {y:2026,m:7};} // Aug 20
 /* pseudo-random "taken" slots so availability feels real but stable */
 function seed(str){let h=0;for(let i=0;i<str.length;i++){h=(h*31+str.charCodeAt(i))>>>0;}return h;}
 function isTaken(dateKey,time){return (seed(dateKey+time)%10) < 3;} // ~30% taken
-function isEnquiry(){return state.service==='group'||state.service==='bookclub';}
+function isEnquiry(){return ['group','bookclub','speaking','schools'].indexOf(state.service)>-1;}
+
+function purposeField(){
+  return `
+    <div class="field">
+      <label>What are you booking Leo for?</label>
+      <select onchange="pickPurpose(this.value)">
+        <option value="" ${!state.purpose&&!state.purposeOther?'selected':''}>Choose one…</option>
+        ${TOPICS.map(g=>`<optgroup label="${esc(g.group)}">${g.items.map(i=>
+          `<option value="${esc(i)}" ${!state.purposeOther&&state.purpose===i?'selected':''}>${esc(i)}</option>`).join('')}</optgroup>`).join('')}
+        <option value="__other" ${state.purposeOther?'selected':''}>Something else…</option>
+      </select>
+      ${state.purposeOther?`<input style="margin-top:8px" placeholder="Tell us in a few words" value="${esc(state.purpose)}" oninput="state.purpose=this.value">`:''}
+    </div>`;
+}
+function pickPurpose(v){
+  if(v==='__other'){state.purposeOther=true;state.purpose='';}
+  else{state.purposeOther=false;state.purpose=v;}
+  render();
+}
 
 /* ---------- render ---------- */
 function render(){
@@ -457,7 +552,7 @@ function render(){
   const area=document.getElementById('stepArea');
   const foot=document.getElementById('mFoot');
   document.getElementById('mTitle').textContent =
-     s===4?'Confirm your booking':(isEnquiry()?'Enquire about a group':'Book a session');
+     s===4?'Confirm your booking':(isEnquiry()?'Send a request':'Book a session');
 
   if(s===1){ // choose service
     area.innerHTML = `
@@ -478,7 +573,7 @@ function render(){
         <div class="step-title">Preferred date</div>
         <div class="step-sub">Pick a preferred start date — we&rsquo;ll confirm the details by email.</div>
         ${calendarHTML()}
-        <div class="notice" style="margin-top:14px">Group sessions are shaped around you. No time slot needed — just a preferred date to start the conversation.</div>`;
+        <div class="notice" style="margin-top:14px">Talks, workshops and groups are shaped around you. No time slot needed — just a preferred date to start the conversation.</div>`;
     } else {
       area.innerHTML = `
         <div class="step-title">Pick a date & time</div>
@@ -497,9 +592,17 @@ function render(){
       <div class="field"><label>Full name</label><input id="f_name" value="${esc(state.name)}" placeholder="Jane Doe" oninput="state.name=this.value"></div>
       <div class="field"><label>Email</label><input id="f_email" type="email" value="${esc(state.email)}" placeholder="jane@email.com" oninput="state.email=this.value"></div>
       <div class="field"><label>Phone (optional)</label><input id="f_phone" value="${esc(state.phone)}" placeholder="(555) 000-0000" oninput="state.phone=this.value"></div>
-      <div class="field"><label>${isEnquiry()?'Tell us about your group':'Notes (optional)'}</label><textarea id="f_notes" rows="3" placeholder="${isEnquiry()?'Group size, what you&rsquo;re hoping to get out of it…':'Anything I should know?'}" oninput="state.notes=this.value">${esc(state.notes)}</textarea></div>`;
+      <div class="field"><label>Organization (optional)</label><input id="f_org" value="${esc(state.organization)}" placeholder="School, club, company or team" oninput="state.organization=this.value"></div>
+      ${purposeField()}
+      <div class="field"><label>Location</label>
+        <select onchange="state.locationMode=this.value">
+          ${['In person','Virtual','Either works'].map(o=>`<option ${state.locationMode===o?'selected':''}>${o}</option>`).join('')}
+        </select></div>
+      <div class="field"><label>Number of participants</label>
+        <input type="number" min="1" value="${Number(state.participants)||1}" oninput="state.participants=this.value"></div>
+      <div class="field"><label>Message${isEnquiry()?'':' (optional)'}</label><textarea id="f_notes" rows="3" placeholder="${isEnquiry()?'Dates, audience, what you&rsquo;re hoping Leo covers…':'Anything I should know?'}" oninput="state.notes=this.value">${esc(state.notes)}</textarea></div>`;
     foot.innerHTML = `<button class="btn btn-ghost" onclick="prev()">Back</button>
-      <button class="btn btn-primary" onclick="submitBooking()">Review & confirm</button>`;
+      <button class="btn btn-primary" onclick="submitBooking()">${isEnquiry()?'Send request':'Review & confirm'}</button>`;
   }
 
   else if(s===4){ // confirmation
@@ -514,7 +617,7 @@ function render(){
           <div class="eb">
             <b>Hi ${esc(first(state.name)||'there')},</b><br>
             ${isEnquiry()
-              ? `Thanks for your interest in the <b>${v.name}</b> (${v.price} ${v.dur}). We'll be in touch shortly to get you started.`
+              ? `Thanks for your interest in <b>${v.name}</b> (${v.price==='Custom'?'quoted per event':v.price+' · '+v.dur}). We'll be in touch shortly to get you started.`
               : `Your <b>${v.name}</b> is confirmed for <b>${fmtDate(state.date)}</b> at <b>${state.time} CT</b> (${v.price}, ${v.dur}).`}
             <br><br>⏰ You'll get an automatic reminder before your session. Reply to reschedule anytime.
             <br><br>— PongLiTation
@@ -581,6 +684,7 @@ function next(){ if(state.step<3){state.step++;render();} }
 function prev(){ if(state.step>1){state.step--; if(state.step===1)state.service=state.service; render();} }
 function submitBooking(){
   if(!state.name || !state.email){alert('Please add your name and email.');return;}
+  if(!state.purpose.trim()){alert('Please tell us what you are booking Leo for.');return;}
   state.step=4; render();
 }
 

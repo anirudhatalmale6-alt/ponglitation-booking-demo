@@ -7,7 +7,7 @@ import { readdirSync, readFileSync } from 'fs';
 import { CONFIG } from './config.js';
 import { db, getSetting, setSetting, dataDir } from './db.js';
 import { todayCT, weekdayOf, addDays, isValidDateStr, prettyDate } from './time.js';
-import { sendConfirmation, sendReminder, emailMode } from './email.js';
+import { sendConfirmation, sendReminder, sendOwnerAlert, emailMode } from './email.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -32,7 +32,9 @@ function availability(date) {
 function publicServices() {
   const s = getSetting('services');
   return Object.fromEntries(Object.entries(s).map(([k, v]) => [k, {
-    name: v.name, price: `$${v.price}`, unit: v.unit, type: v.type, desc: v.desc,
+    // Speaking engagements are quoted per event, so a 0 price shows as "Custom".
+    name: v.name, price: Number(v.price) > 0 ? `$${v.price}` : 'Custom',
+    unit: v.unit, type: v.type, desc: v.desc,
   }]));
 }
 
@@ -42,6 +44,7 @@ app.get('/api/config', (_req, res) => {
     services: publicServices(),
     schedule: getSetting('schedule'),
     blockedDates: getSetting('blockedDates') || [],
+    topics: getSetting('topics') || [],
     copy: getSetting('copy'),
     tz: CONFIG.tzLabel,
     today: todayCT(),
@@ -53,18 +56,31 @@ app.get('/api/availability', (req, res) => {
 });
 
 const insertBooking = db.prepare(`
-  INSERT INTO bookings(ref, service_key, service_name, is_enquiry, date, time, name, email, phone, notes, status, created_at)
-  VALUES(@ref,@service_key,@service_name,@is_enquiry,@date,@time,@name,@email,@phone,@notes,'booked',@created_at)
+  INSERT INTO bookings(ref, service_key, service_name, is_enquiry, date, time, name, email, phone, notes,
+                       organization, purpose, location_mode, participants, status, created_at)
+  VALUES(@ref,@service_key,@service_name,@is_enquiry,@date,@time,@name,@email,@phone,@notes,
+         @organization,@purpose,@location_mode,@participants,'booked',@created_at)
 `);
+
+const LOCATION_MODES = ['In person', 'Virtual', 'Either works'];
 
 app.post('/api/book', async (req, res) => {
   try {
-    const { service, date, time, name, email, phone, notes } = req.body || {};
+    const { service, date, time, name, email, phone, notes,
+            organization, purpose, locationMode, participants } = req.body || {};
     const services = getSetting('services');
     const svc = services[service];
     if (!svc) return res.status(400).json({ error: 'Unknown service.' });
     if (!name || !String(name).trim()) return res.status(400).json({ error: 'Name is required.' });
     if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return res.status(400).json({ error: 'A valid email is required.' });
+    if (!purpose || !String(purpose).trim()) return res.status(400).json({ error: 'Please tell us what you are booking Leo for.' });
+
+    // Free text is allowed here (the form offers "Something else"), so just cap
+    // the length rather than restricting it to the listed topics.
+    const purposeClean = String(purpose).trim().slice(0, 160);
+    const orgClean = organization ? String(organization).trim().slice(0, 120) : null;
+    const locClean = LOCATION_MODES.includes(locationMode) ? locationMode : 'In person';
+    const peopleNum = Math.min(Math.max(parseInt(participants, 10) || 1, 1), 10000);
 
     const isEnquiry = svc.type === 'enquiry' ? 1 : 0;
     let d = date || null, t = time || null;
@@ -85,6 +101,8 @@ app.post('/api/book', async (req, res) => {
       ref, service_key: service, service_name: svc.name, is_enquiry: isEnquiry,
       date: d, time: t, name: String(name).trim(), email: String(email).trim(),
       phone: phone ? String(phone).trim() : null, notes: notes ? String(notes).trim() : null,
+      organization: orgClean, purpose: purposeClean,
+      location_mode: locClean, participants: peopleNum,
       created_at: new Date().toISOString(),
     };
 
@@ -99,6 +117,10 @@ app.post('/api/book', async (req, res) => {
     let email_status = 'queued';
     try { const r = await sendConfirmation(row); email_status = r.mode; }
     catch (e) { email_status = 'failed'; console.error('email error', e.message); }
+
+    // Alert the owner too — enquiries carry details that need a reply.
+    try { await sendOwnerAlert(row); }
+    catch (e) { console.error('owner alert failed', e.message); }
 
     res.json({ ok: true, ref, isEnquiry: !!isEnquiry, date: d, time: t,
       prettyDate: d ? prettyDate(d) : null, tz: CONFIG.tzLabel, email_status });
@@ -137,6 +159,7 @@ app.get('/admin/api/state', requireAdmin, (_req, res) => {
     services: getSetting('services'),
     schedule: getSetting('schedule'),
     blockedDates: getSetting('blockedDates'),
+    topics: getSetting('topics') || [],
     copy: getSetting('copy'),
     emailMode, today: todayCT(),
   });
@@ -183,6 +206,22 @@ app.post('/admin/api/services', requireAdmin, (req, res) => {
   }
   setSetting('services', clean);
   res.json({ ok: true, services: clean });
+});
+
+// The "What are you booking Leo for?" answers, also shown as topic lists on the
+// site. Sent as [{ group, items:[…] }] so the headings stay editable too.
+app.post('/admin/api/topics', requireAdmin, (req, res) => {
+  const list = req.body?.topics;
+  if (!Array.isArray(list)) return res.status(400).json({ error: 'Bad request.' });
+  const clean = list
+    .map((g) => ({
+      group: String(g?.group || '').trim(),
+      items: (Array.isArray(g?.items) ? g.items : []).map((i) => String(i).trim()).filter(Boolean),
+    }))
+    .filter((g) => g.group && g.items.length);
+  if (!clean.length) return res.status(400).json({ error: 'Add at least one topic.' });
+  setSetting('topics', clean);
+  res.json({ ok: true, topics: clean });
 });
 
 app.post('/admin/api/schedule', requireAdmin, (req, res) => {

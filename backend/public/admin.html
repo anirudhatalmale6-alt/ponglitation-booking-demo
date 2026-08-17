@@ -81,8 +81,16 @@ a.email{color:var(--brand)}
 
     <section id="tab-pricing" class="hidden">
       <h2>Prices & services</h2>
-      <p class="muted">Change a price or description and hit Save — it updates the live site instantly.</p>
+      <p class="muted">Change a price or description and hit Save — it updates the live site instantly. Set a price to <b>0</b> for anything you quote per event (talks, workshops) and the site shows &ldquo;Custom&rdquo; instead of a number.</p>
       <div id="services" class="grid"></div>
+
+      <h2>Booking form options</h2>
+      <p class="muted">These are the answers people can pick under &ldquo;What are you booking Leo for?&rdquo; — and the same lists shown on the Speaking &amp; Schools panels on your site. One per line.</p>
+      <div class="card">
+        <div id="topics"></div>
+        <button class="btn sm" onclick="saveTopics()">Save lists</button>
+        <span id="tpSaved" class="muted"></span>
+      </div>
     </section>
 
     <section id="tab-hours" class="hidden">
@@ -120,7 +128,7 @@ async function load(){
   const r=await api('/admin/api/state'); if(!r.ok){ location.reload(); return; }
   S=await r.json();
   document.getElementById('mode').textContent = S.emailMode==='smtp'?'Live email: ON':'Email: preview mode';
-  renderBookings(); renderServices(); renderSchedule(); renderBlocked(); loadOutbox();
+  renderBookings(); renderServices(); renderTopics(); renderSchedule(); renderBlocked(); loadOutbox();
 }
 
 function renderBookings(){
@@ -131,9 +139,11 @@ function renderBookings(){
     <tbody>${rows.map(b=>`
       <tr>
         <td><b>${b.ref}</b></td>
-        <td>${b.service_name}${b.is_enquiry?' <span class="pill enquiry">enquiry</span>':''}</td>
+        <td>${b.service_name}${b.is_enquiry?' <span class="pill enquiry">enquiry</span>':''}
+            ${b.purpose?'<br><span class="muted">For: '+esc(b.purpose)+'</span>':''}
+            ${b.location_mode?'<br><span class="muted">'+esc(b.location_mode)+(b.participants>1?' · '+b.participants+' people':'')+'</span>':''}</td>
         <td>${b.date?b.date:'—'}${b.time?'<br>'+b.time:''}</td>
-        <td>${esc(b.name)}<br><a class="email" href="mailto:${esc(b.email)}">${esc(b.email)}</a>${b.phone?'<br>'+esc(b.phone):''}${b.notes?'<br><span class="muted">'+esc(b.notes)+'</span>':''}</td>
+        <td>${esc(b.name)}${b.organization?'<br><span class="muted">'+esc(b.organization)+'</span>':''}<br><a class="email" href="mailto:${esc(b.email)}">${esc(b.email)}</a>${b.phone?'<br>'+esc(b.phone):''}${b.notes?'<br><span class="muted">'+esc(b.notes)+'</span>':''}</td>
         <td><span class="pill ${b.status}">${b.status}</span>${b.reminder_sent?'<br><span class="muted">reminded</span>':''}</td>
         <td>${b.status==='booked'
               ?`<button class="btn danger sm" onclick="cancel(${b.id})">Cancel</button>`
@@ -160,6 +170,25 @@ async function saveService(k){
   const r=await api('/admin/api/service',{method:'POST',body:JSON.stringify(body)});
   document.getElementById('sv_'+k).textContent = r.ok?' ✓ saved':' error';
   if(r.ok){ S.services=(await r.json()).services; setTimeout(()=>document.getElementById('sv_'+k).textContent='',1500); }
+}
+
+function renderTopics(){
+  const list=S.topics||[];
+  document.getElementById('topics').innerHTML=list.map((g,i)=>`
+    <div style="margin-bottom:16px">
+      <input id="tg_${i}" value="${esc(g.group)}" style="width:100%;font-family:Sora;font-weight:700" title="list heading">
+      <textarea id="ti_${i}" rows="${Math.max(3,(g.items||[]).length)}"
+        style="width:100%;margin-top:6px;font-family:inherit;border:1.5px solid var(--line);border-radius:9px;padding:.5rem .7rem;font-size:.9rem">${esc((g.items||[]).join('\n'))}</textarea>
+    </div>`).join('');
+}
+async function saveTopics(){
+  const topics=(S.topics||[]).map((g,i)=>({
+    group:document.getElementById('tg_'+i).value,
+    items:document.getElementById('ti_'+i).value.split('\n').map(s=>s.trim()).filter(Boolean)
+  }));
+  const r=await api('/admin/api/topics',{method:'POST',body:JSON.stringify({topics})});
+  document.getElementById('tpSaved').textContent = r.ok?' ✓ saved — live on your site now':' error';
+  if(r.ok){ S.topics=(await r.json()).topics; setTimeout(()=>document.getElementById('tpSaved').textContent='',2500); }
 }
 
 const DOW=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];

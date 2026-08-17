@@ -2,7 +2,7 @@ import Database from 'better-sqlite3';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { mkdirSync } from 'fs';
-import { SEED_SERVICES, SEED_SCHEDULE } from './config.js';
+import { SEED_SERVICES, SEED_SCHEDULE, SEED_TOPICS } from './config.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 // DATA_DIR lets the database live on a persistent disk in production
@@ -37,6 +37,18 @@ db.exec(`
   );
 `);
 
+// Extra booking-form answers, added after the first release. The live database
+// lives on a persistent disk, so existing tables have to be migrated in place.
+const bookingCols = db.prepare('PRAGMA table_info(bookings)').all().map((c) => c.name);
+for (const [col, type] of [
+  ['organization', 'TEXT'],
+  ['purpose', 'TEXT'],
+  ['location_mode', 'TEXT'],
+  ['participants', 'INTEGER'],
+]) {
+  if (!bookingCols.includes(col)) db.exec(`ALTER TABLE bookings ADD COLUMN ${col} ${type}`);
+}
+
 // Prevent double-booking at the database level: only one active booking may
 // hold a given (date, time). Cancelled rows are excluded via the partial index.
 db.exec(`
@@ -64,9 +76,10 @@ export function setSetting(key, value) {
 if (getSetting('services') === null) setSetting('services', SEED_SERVICES);
 if (getSetting('schedule') === null) setSetting('schedule', SEED_SCHEDULE);
 if (getSetting('blockedDates') === null) setSetting('blockedDates', []);
+if (getSetting('topics') === null) setSetting('topics', SEED_TOPICS);
 if (getSetting('copy') === null) {
   setSetting('copy', {
     heroTitle: 'Grow through whatever you go through.',
-    heroLead: 'Motivational sessions and table-tennis coaching for anyone rising through something hard. Power through it. Keep growing. And never do it alone.',
+    heroLead: 'Speaking, motivation and mindset coaching for anyone rising through something hard — plus table tennis with Leo. Power through it. Keep growing. And never do it alone.',
   });
 }
