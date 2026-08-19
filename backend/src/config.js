@@ -24,19 +24,46 @@ export const CONFIG = {
 // Default catalogue — seeded into the DB on first run, then editable from the
 // admin dashboard (no code needed).
 // A price of 0 means "quoted per event" rather than free — see publicServices().
+// `section` decides where a service appears on the homepage: 'speaking' renders
+// it as a wide panel with its topic list, 'cards' as a pricing card, 'hidden'
+// keeps it bookable by link only. `icon` and `tag` are the card decoration.
 export const SEED_SERVICES = {
   motivation: { name: 'Motivational Session', price: 45, unit: '60 min', type: 'timed',
-                desc: 'One-on-one mindset & momentum' },
+                desc: 'A focused one-on-one to rebuild momentum, mindset and drive — and power through whatever is trying to hold you down.',
+                section: 'cards', icon: '🎤', tag: 'Most popular' },
   speaking:   { name: 'Speaking & Motivation', price: 0, unit: 'talks & keynotes', type: 'enquiry',
-                desc: 'Book Leo to speak to your team, club or audience' },
+                desc: 'Keynotes and talks shaped around the moment your audience is actually in.',
+                section: 'speaking', icon: '🎤', tag: '' },
   schools:    { name: 'Schools & Organizations', price: 0, unit: 'workshops & clinics', type: 'enquiry',
-                desc: 'Youth workshops, clinics, demos & community events' },
+                desc: 'Hands-on sessions for students, youth programs and community groups.',
+                section: 'speaking', icon: '🏫', tag: '' },
   lesson:     { name: 'Book Leo', price: 70, unit: '60 min', type: 'timed',
-                desc: 'One-on-one at the table with Leo, all levels' },
+                desc: 'An hour at the table with Leo — technique, footwork and match play, plus the grit to power through it. All levels welcome.',
+                section: 'cards', icon: '🏓', tag: 'One-on-one at the table' },
   group:      { name: 'Motivational Group', price: 40, unit: 'per hour', type: 'enquiry',
-                desc: 'Grow together, in a group setting' },
+                desc: 'Rise alongside others in a group that keeps showing up — because no one should have to grow alone.',
+                section: 'cards', icon: '🌱', tag: 'Grow together' },
   bookclub:   { name: 'Book Club', price: 30, unit: 'per month', type: 'enquiry',
-                desc: 'Read, reflect & rise — monthly membership' },
+                desc: 'Read, reflect and rise together. A monthly membership with a book, a conversation and a push forward.',
+                section: 'cards', icon: '📚', tag: 'Monthly membership' },
+};
+
+// Where a service can be shown. Used to validate dashboard edits.
+export const SERVICE_SECTIONS = ['cards', 'speaking', 'hidden'];
+
+// Homepage wording, seeded once then editable from the dashboard. Every key here
+// is painted onto the live page, so adding a key means adding it to the page too.
+export const SEED_COPY = {
+  heroTitle: 'Grow through',
+  heroAccent: 'whatever you go through.',
+  heroLead: 'Motivational speaking, one-on-one sessions and youth workshops for anyone rising through something hard — plus table tennis with Leo. Power through it. Keep growing. And never do it alone.',
+  speakingEyebrow: 'Bring Leo to your people',
+  speakingTitle: 'Speaking, workshops & clinics',
+  speakingLead: 'Leo speaks to teams, schools, clubs and communities — the mindset that turns pressure into fuel, told through the PongLiTation journey.',
+  speakingNote: 'Every talk, workshop and clinic is quoted per event — send the details and Leo comes back to you personally.',
+  servicesEyebrow: 'What we offer',
+  servicesTitle: 'Pick your Inspiration!',
+  servicesLead: 'One-on-one and small-group options. Every booking sends an instant confirmation and an automatic reminder before your session — no follow-up needed.',
 };
 
 // Answers offered for "What are you booking Leo for?" on the booking form, and

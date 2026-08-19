@@ -98,7 +98,7 @@ section.pad{padding:84px 0}
 .sec-head p{color:var(--muted);font-size:1.05rem}
 
 /* services */
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
 .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column}
 .card:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
 .card .ic{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-size:1.5rem;margin-bottom:16px}
@@ -107,7 +107,7 @@ section.pad{padding:84px 0}
 .card .price{font-family:var(--display);font-weight:800;font-size:1.6rem;margin:1rem 0 .3rem}
 .card .price small{font-size:.85rem;font-weight:500;color:var(--muted)}
 .card .btn{margin-top:1rem;width:100%;justify-content:center}
-.tag{display:inline-block;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:.25rem .55rem;border-radius:6px;margin-bottom:12px}
+.tag{display:inline-block;align-self:flex-start;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:.25rem .55rem;border-radius:6px;margin-bottom:12px}
 
 /* how it works */
 .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
@@ -265,8 +265,8 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
   <div class="wrap hero-grid">
     <div>
       <span class="eyebrow">Rooted · Rising · Unstoppable</span>
-      <h1>Grow through <span class="hl">whatever you go through.</span></h1>
-      <p class="lead">Motivational speaking, one-on-one sessions and youth workshops for anyone rising through something hard &mdash; plus table tennis with Leo. Power through it. Keep growing. And never do it alone.</p>
+      <h1 id="heroTitle">Grow through <span class="hl">whatever you go through.</span></h1>
+      <p class="lead" id="heroLead">Motivational speaking, one-on-one sessions and youth workshops for anyone rising through something hard &mdash; plus table tennis with Leo. Power through it. Keep growing. And never do it alone.</p>
       <div class="hero-cta">
         <button class="btn btn-primary" onclick="openBooking()">Book a session →</button>
         <a class="btn btn-ghost" href="#speaking">Book Leo to speak</a>
@@ -296,18 +296,18 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
 <section class="pad" id="speaking" style="background:var(--soft)">
   <div class="wrap">
     <div class="sec-head">
-      <span class="eyebrow">Bring Leo to your people</span>
-      <h2>Speaking, workshops &amp; clinics</h2>
-      <p>Leo speaks to teams, schools, clubs and communities &mdash; the mindset that turns pressure into fuel, told through the PongLiTation journey.</p>
+      <span class="eyebrow" id="speakingEyebrow">Bring Leo to your people</span>
+      <h2 id="speakingTitle">Speaking, workshops &amp; clinics</h2>
+      <p id="speakingLead">Leo speaks to teams, schools, clubs and communities &mdash; the mindset that turns pressure into fuel, told through the PongLiTation journey.</p>
     </div>
-    <div class="topics">
+    <div class="topics" id="topics-grid">
       <div class="topic-card">
         <div class="th">
           <div class="ic" style="background:rgba(195,154,118,.16);color:var(--brand)">&#127908;</div>
-          <h3 id="topic-title-0">Speaking &amp; Motivation</h3>
+          <h3>Speaking &amp; Motivation</h3>
         </div>
         <p>Keynotes and talks shaped around the moment your audience is actually in.</p>
-        <div class="chips" id="chips-speaking">
+        <div class="chips">
           <span class="chip">Discipline &amp; consistency</span>
           <span class="chip">Athlete mindset</span>
           <span class="chip">Overcoming setbacks</span>
@@ -320,10 +320,10 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
       <div class="topic-card">
         <div class="th">
           <div class="ic" style="background:rgba(95,115,80,.13);color:var(--brand)">&#127979;</div>
-          <h3 id="topic-title-1">Schools &amp; Organizations</h3>
+          <h3>Schools &amp; Organizations</h3>
         </div>
         <p>Hands-on sessions for students, youth programs and community groups.</p>
-        <div class="chips" id="chips-schools">
+        <div class="chips">
           <span class="chip">Table tennis demonstrations</span>
           <span class="chip">Youth workshops</span>
           <span class="chip">Motivational sessions</span>
@@ -333,23 +333,23 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
         <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="openBooking('schools')">Request a date</button>
       </div>
     </div>
-    <p class="muted-note">Every talk, workshop and clinic is quoted per event &mdash; send the details and Leo comes back to you personally.</p>
+    <p class="muted-note" id="speakingNote">Every talk, workshop and clinic is quoted per event &mdash; send the details and Leo comes back to you personally.</p>
   </div>
 </section>
 
 <section class="pad" id="services">
   <div class="wrap">
     <div class="sec-head">
-      <span class="eyebrow">What we offer</span>
-      <h2>Pick your Inspiration!</h2>
-      <p>One-on-one and small-group options. Every booking sends an instant confirmation and an automatic reminder before your session — no follow-up needed.</p>
+      <span class="eyebrow" id="servicesEyebrow">What we offer</span>
+      <h2 id="servicesTitle">Pick your Inspiration!</h2>
+      <p id="servicesLead">One-on-one and small-group options. Every booking sends an instant confirmation and an automatic reminder before your session — no follow-up needed.</p>
     </div>
-    <div class="cards">
+    <div class="cards" id="service-cards">
       <div class="card">
         <div class="ic" style="background:rgba(195,154,118,.16);color:var(--brand)">🎤</div>
         <span class="tag" style="background:rgba(195,154,118,.16);color:var(--brand)">Most popular</span>
         <h3>Motivational Session</h3>
-        <p>A focused one-on-one to rebuild momentum, mindset and drive — and power through whatever is trying to hold you down.</p>
+        <p>A focused one-on-one to rebuild momentum, mindset and drive &mdash; and power through whatever is trying to hold you down.</p>
         <div class="price">$45 <small>/ 60 min</small></div>
         <button class="btn btn-primary" onclick="openBooking('motivation')">Book a session</button>
       </div>
@@ -357,17 +357,25 @@ footer{background:var(--soft);border-top:1px solid var(--line);padding:56px 0 30
         <div class="ic" style="background:rgba(95,115,80,.13);color:var(--brand)">🏓</div>
         <span class="tag" style="background:rgba(95,115,80,.13);color:var(--brand)">One-on-one at the table</span>
         <h3>Book Leo</h3>
-        <p>An hour at the table with Leo — technique, footwork and match play, plus the grit to power through it. All levels welcome.</p>
+        <p>An hour at the table with Leo &mdash; technique, footwork and match play, plus the grit to power through it. All levels welcome.</p>
         <div class="price">$70 <small>/ 60 min</small></div>
-        <button class="btn btn-primary" onclick="openBooking('lesson')">Book Leo</button>
+        <button class="btn btn-primary" onclick="openBooking('lesson')">Book a session</button>
       </div>
       <div class="card">
         <div class="ic" style="background:rgba(169,189,151,.24);color:#5f7350">🌱</div>
         <span class="tag" style="background:rgba(169,189,151,.24);color:#5f7350">Grow together</span>
-        <h3>Groups &amp; Book Clubs</h3>
-        <p>Rise alongside others in a Motivational Group, or join the Book Club to read, reflect and grow — because no one should have to grow alone.</p>
-        <div class="price" style="font-size:1.2rem;line-height:1.55">$40 <small>/ hour · Motivational Groups</small><br>$30 <small>/ month · Book Club</small></div>
-        <button class="btn btn-ghost" onclick="openBooking('group')">Enquire</button>
+        <h3>Motivational Group</h3>
+        <p>Rise alongside others in a group that keeps showing up &mdash; because no one should have to grow alone.</p>
+        <div class="price">$40 <small>/ per hour</small></div>
+        <button class="btn btn-ghost" onclick="openBooking('group')">Request a date</button>
+      </div>
+      <div class="card">
+        <div class="ic" style="background:rgba(122,139,105,.16);color:#5f7350">📚</div>
+        <span class="tag" style="background:rgba(122,139,105,.16);color:#5f7350">Monthly membership</span>
+        <h3>Book Club</h3>
+        <p>Read, reflect and rise together. A monthly membership with a book, a conversation and a push forward.</p>
+        <div class="price">$30 <small>/ per month</small></div>
+        <button class="btn btn-ghost" onclick="openBooking('bookclub')">Request a date</button>
       </div>
     </div>
   </div>

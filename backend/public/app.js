@@ -13,19 +13,84 @@ async function loadConfig(){
   try{ const r = await fetch('/api/config'); CFG = await r.json(); }
   catch(e){ console.error('config load failed', e); }
 }
-// The topic chips are in the HTML for search engines; once the config arrives we
-// repaint them so the dashboard stays the single source of truth.
-function paintTopics(){
-  const t = topics();
-  [['chips-speaking', 'topic-title-0', 0], ['chips-schools', 'topic-title-1', 1]].forEach(([cid, tid, i]) => {
-    const g = t[i]; if(!g) return;
-    const box = document.getElementById(cid);
-    if(box && (g.items||[]).length) box.innerHTML = g.items.map(x=>`<span class="chip">${esc(x)}</span>`).join('');
-    const title = document.getElementById(tid);
-    if(title && g.group) title.textContent = g.group;
-  });
+// The homepage ships with its content written into the HTML so search engines and
+// no-JS visitors see a complete page. Once the config arrives we repaint it from
+// the dashboard, which is the single source of truth for every word and price.
+const ACCENTS = [
+  'background:rgba(195,154,118,.16);color:var(--brand)',
+  'background:rgba(95,115,80,.13);color:var(--brand)',
+  'background:rgba(169,189,151,.24);color:#5f7350',
+  'background:rgba(122,139,105,.16);color:#5f7350',
+];
+function inSection(name){
+  return Object.entries(services()).filter(([, v]) => (v.section || 'cards') === name);
 }
-const cfgReady = loadConfig().then(paintTopics);
+function setText(id, value){
+  const el = document.getElementById(id);
+  if(el && value) el.textContent = value;
+}
+function priceHTML(v){
+  return v.price === 'Custom'
+    ? `<span style="font-size:1.5rem">Custom</span> <small>· ${esc(v.unit)}</small>`
+    : `${esc(v.price)} <small>/ ${esc(v.unit)}</small>`;
+}
+function ctaLabel(v){ return v.type === 'enquiry' ? 'Request a date' : 'Book a session'; }
+
+function paintCopy(){
+  const c = (CFG && CFG.copy) || {};
+  const h1 = document.getElementById('heroTitle');
+  if(h1 && c.heroTitle) h1.innerHTML = `${esc(c.heroTitle)} <span class="hl">${esc(c.heroAccent||'')}</span>`;
+  setText('heroLead', c.heroLead);
+  setText('speakingEyebrow', c.speakingEyebrow);
+  setText('speakingTitle', c.speakingTitle);
+  setText('speakingLead', c.speakingLead);
+  setText('speakingNote', c.speakingNote);
+  setText('servicesEyebrow', c.servicesEyebrow);
+  setText('servicesTitle', c.servicesTitle);
+  setText('servicesLead', c.servicesLead);
+}
+
+// Speaking panels: one per service filed under "speaking", each with the topic
+// list whose heading matches it (falling back to position, so a renamed service
+// keeps its chips).
+function paintPanels(){
+  const box = document.getElementById('topics-grid');
+  const panels = inSection('speaking');
+  if(!box || !panels.length) return;
+  const groups = topics();
+  box.innerHTML = panels.map(([k, v], i) => {
+    const g = groups.find(x => x.group === v.name) || groups[i] || { items: [] };
+    return `
+      <div class="topic-card">
+        <div class="th"><div class="ic" style="${ACCENTS[i % ACCENTS.length]}">${esc(v.icon || '🎤')}</div>
+          <h3>${esc(v.name)}</h3></div>
+        <p>${esc(v.desc)}</p>
+        <div class="chips">${(g.items||[]).map(x=>`<span class="chip">${esc(x)}</span>`).join('')}</div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center"
+          onclick="openBooking('${k}')">${ctaLabel(v)}</button>
+      </div>`;
+  }).join('');
+}
+
+// Pricing cards: one per service filed under "cards", in the stored order.
+function paintCards(){
+  const box = document.getElementById('service-cards');
+  const cards = inSection('cards');
+  if(!box || !cards.length) return;
+  box.innerHTML = cards.map(([k, v], i) => `
+    <div class="card">
+      <div class="ic" style="${ACCENTS[i % ACCENTS.length]}">${esc(v.icon || '•')}</div>
+      ${v.tag ? `<span class="tag" style="${ACCENTS[i % ACCENTS.length]}">${esc(v.tag)}</span>` : ''}
+      <h3>${esc(v.name)}</h3>
+      <p>${esc(v.desc)}</p>
+      <div class="price">${priceHTML(v)}</div>
+      <button class="btn ${v.type==='enquiry'?'btn-ghost':'btn-primary'}"
+        onclick="openBooking('${k}')">${ctaLabel(v)}</button>
+    </div>`).join('');
+}
+
+function paintSite(){ paintCopy(); paintPanels(); paintCards(); }
+const cfgReady = loadConfig().then(paintSite);
 
 function services(){ return (CFG && CFG.services) || {}; }
 function scheduleFor(dow){ return (CFG && CFG.schedule && CFG.schedule[dow]) || []; }
@@ -74,11 +139,12 @@ function render(){
            : (isEnquiry()?'Send a request':'Book a session');
 
   if(s===1){
-    const svcs=services();
+    // Anything filed as "hidden" stays bookable by direct link but off this list.
+    const svcs=Object.entries(services()).filter(([,v])=>v.section!=='hidden');
     area.innerHTML = `
       <div class="step-title">Choose a service</div>
       <div class="step-sub">What would you like to book?</div>
-      ${Object.entries(svcs).map(([k,v])=>`
+      ${svcs.map(([k,v])=>`
         <div class="opt ${state.service===k?'sel':''}" onclick="pickService('${k}')">
           <div><b>${v.name}</b><small>${v.desc} · ${v.unit}</small></div>
           <span class="p">${v.price}</span>

@@ -4,7 +4,7 @@ import { randomUUID, randomBytes } from 'crypto';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { readdirSync, readFileSync } from 'fs';
-import { CONFIG } from './config.js';
+import { CONFIG, SERVICE_SECTIONS, SEED_COPY } from './config.js';
 import { db, getSetting, setSetting, dataDir } from './db.js';
 import { todayCT, weekdayOf, addDays, isValidDateStr, prettyDate } from './time.js';
 import { sendConfirmation, sendReminder, sendOwnerAlert, emailMode } from './email.js';
@@ -35,6 +35,8 @@ function publicServices() {
     // Speaking engagements are quoted per event, so a 0 price shows as "Custom".
     name: v.name, price: Number(v.price) > 0 ? `$${v.price}` : 'Custom',
     unit: v.unit, type: v.type, desc: v.desc,
+    // The homepage renders itself from this, so the presentation fields ship too.
+    section: v.section || 'cards', icon: v.icon || '', tag: v.tag || '',
   }]));
 }
 
@@ -177,13 +179,18 @@ app.post('/admin/api/booking/:id/delete', requireAdmin, (req, res) => {
 });
 
 app.post('/admin/api/service', requireAdmin, (req, res) => {
-  const { key, price, name, unit, desc } = req.body || {};
+  const { key, price, name, unit, desc, icon, tag, section } = req.body || {};
   const services = getSetting('services');
   if (!services[key]) return res.status(400).json({ error: 'Unknown service.' });
-  if (price != null) services[key].price = Number(price);
-  if (name) services[key].name = name;
-  if (unit) services[key].unit = unit;
-  if (desc) services[key].desc = desc;
+  const svc = services[key];
+  if (price != null && price !== '') svc.price = Math.max(0, Number(price) || 0);
+  if (name && String(name).trim()) svc.name = String(name).trim().slice(0, 60);
+  if (unit && String(unit).trim()) svc.unit = String(unit).trim().slice(0, 40);
+  // Blank is a legitimate value for these two, so they are not truthiness-checked.
+  if (desc !== undefined) svc.desc = String(desc).trim().slice(0, 400);
+  if (icon !== undefined) svc.icon = String(icon).trim().slice(0, 8);
+  if (tag !== undefined) svc.tag = String(tag).trim().slice(0, 40);
+  if (SERVICE_SECTIONS.includes(section)) svc.section = section;
   setSetting('services', services);
   res.json({ ok: true, services });
 });
@@ -202,6 +209,8 @@ app.post('/admin/api/services', requireAdmin, (req, res) => {
     clean[k] = {
       name: String(v.name), price: Number(v.price), unit: String(v.unit),
       type: v.type, desc: String(v.desc || ''),
+      section: SERVICE_SECTIONS.includes(v.section) ? v.section : 'cards',
+      icon: String(v.icon || ''), tag: String(v.tag || ''),
     };
   }
   setSetting('services', clean);
@@ -243,8 +252,13 @@ app.post('/admin/api/block', requireAdmin, (req, res) => {
   res.json({ ok: true, blockedDates: list });
 });
 
+// Homepage wording. Only the keys the page actually paints are accepted, so a
+// typo in the dashboard cannot quietly add a setting nothing ever reads.
 app.post('/admin/api/copy', requireAdmin, (req, res) => {
-  const copy = { ...getSetting('copy'), ...(req.body || {}) };
+  const copy = { ...SEED_COPY, ...getSetting('copy') };
+  for (const [k, v] of Object.entries(req.body || {})) {
+    if (k in SEED_COPY && typeof v === 'string' && v.trim()) copy[k] = v.trim().slice(0, 600);
+  }
   setSetting('copy', copy);
   res.json({ ok: true, copy });
 });

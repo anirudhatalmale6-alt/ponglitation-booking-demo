@@ -67,6 +67,7 @@ a.email{color:var(--brand)}
     <div class="tabs">
       <div class="tab on" data-tab="bookings" onclick="tab('bookings')">Bookings</div>
       <div class="tab" data-tab="pricing" onclick="tab('pricing')">Prices & services</div>
+      <div class="tab" data-tab="text" onclick="tab('text')">Website text</div>
       <div class="tab" data-tab="hours" onclick="tab('hours')">Hours & days off</div>
       <div class="tab" data-tab="emails" onclick="tab('emails')">Emails</div>
     </div>
@@ -81,7 +82,7 @@ a.email{color:var(--brand)}
 
     <section id="tab-pricing" class="hidden">
       <h2>Prices & services</h2>
-      <p class="muted">Change a price or description and hit Save — it updates the live site instantly. Set a price to <b>0</b> for anything you quote per event (talks, workshops) and the site shows &ldquo;Custom&rdquo; instead of a number.</p>
+      <p class="muted">Everything here is what your website shows. Change a name, price, description, icon or badge, hit Save, then reload your site to see it. Set a price to <b>0</b> for anything you quote per event (talks, workshops) and the site shows &ldquo;Custom&rdquo; instead of a number.</p>
       <div id="services" class="grid"></div>
 
       <h2>Booking form options</h2>
@@ -90,6 +91,16 @@ a.email{color:var(--brand)}
         <div id="topics"></div>
         <button class="btn sm" onclick="saveTopics()">Save lists</button>
         <span id="tpSaved" class="muted"></span>
+      </div>
+    </section>
+
+    <section id="tab-text" class="hidden">
+      <h2>Website text</h2>
+      <p class="muted">The wording on your homepage. Edit anything here, hit Save, then reload your site.</p>
+      <div class="card">
+        <div id="copy"></div>
+        <button class="btn sm" onclick="saveCopy()">Save text</button>
+        <span id="cpSaved" class="muted"></span>
       </div>
     </section>
 
@@ -128,7 +139,7 @@ async function load(){
   const r=await api('/admin/api/state'); if(!r.ok){ location.reload(); return; }
   S=await r.json();
   document.getElementById('mode').textContent = S.emailMode==='smtp'?'Live email: ON':'Email: preview mode';
-  renderBookings(); renderServices(); renderTopics(); renderSchedule(); renderBlocked(); loadOutbox();
+  renderBookings(); renderServices(); renderTopics(); renderCopy(); renderSchedule(); renderBlocked(); loadOutbox();
 }
 
 function renderBookings(){
@@ -153,23 +164,66 @@ function renderBookings(){
 async function cancel(id){ if(!confirm('Cancel this booking?'))return; await api('/admin/api/booking/'+id+'/cancel',{method:'POST'}); load(); }
 async function remove(id){ if(!confirm('Remove this from the list for good?'))return; await api('/admin/api/booking/'+id+'/delete',{method:'POST'}); load(); }
 
+const PLACES=[['cards','Pricing cards'],['speaking','Speaking section'],['hidden','Hide from the site']];
 function renderServices(){
   document.getElementById('services').innerHTML=Object.entries(S.services).map(([k,v])=>`
     <div class="card">
-      <b style="font-family:Sora">${v.name}</b>
-      <div class="muted" style="margin:6px 0">${v.type==='enquiry'?'Enquiry':'Bookable'}</div>
+      <div class="muted" style="margin-bottom:6px">${v.type==='enquiry'?'Enquiry (no time slot)':'Bookable time slot'}</div>
+      <label class="muted">Name shown on the site</label>
+      <input id="n_${k}" value="${esc(v.name)}" style="width:100%;font-family:Sora;font-weight:700">
+      <label class="muted" style="display:block;margin-top:10px">Price and what it covers</label>
       <div class="row"><span>$</span><input id="p_${k}" type="number" value="${v.price}" style="width:90px">
-        <input id="u_${k}" value="${esc(v.unit)}" style="width:100px" title="unit"></div>
-      <input id="d_${k}" value="${esc(v.desc)}" style="width:100%;margin-top:8px" title="description">
-      <button class="btn sm" style="margin-top:10px" onclick="saveService('${k}')">Save</button>
+        <input id="u_${k}" value="${esc(v.unit)}" style="width:130px" title="e.g. 60 min"></div>
+      <label class="muted" style="display:block;margin-top:10px">Description</label>
+      <textarea id="d_${k}" rows="3" style="width:100%;font-family:inherit;border:1.5px solid var(--line);border-radius:9px;padding:.5rem .7rem;font-size:.9rem">${esc(v.desc)}</textarea>
+      <div class="row" style="margin-top:10px">
+        <div><label class="muted">Icon</label><input id="i_${k}" value="${esc(v.icon)}" style="width:60px;text-align:center"></div>
+        <div style="flex:1"><label class="muted">Badge</label><input id="t_${k}" value="${esc(v.tag)}" placeholder="none" style="width:100%"></div>
+      </div>
+      <label class="muted" style="display:block;margin-top:10px">Where it appears</label>
+      <select id="s_${k}" style="width:100%">
+        ${PLACES.map(([val,lbl])=>`<option value="${val}" ${(v.section||'cards')===val?'selected':''}>${lbl}</option>`).join('')}
+      </select>
+      <button class="btn sm" style="margin-top:12px" onclick="saveService('${k}')">Save</button>
       <span id="sv_${k}" class="muted"></span>
     </div>`).join('');
 }
 async function saveService(k){
-  const body={key:k,price:document.getElementById('p_'+k).value,unit:document.getElementById('u_'+k).value,desc:document.getElementById('d_'+k).value};
+  const val=id=>document.getElementById(id+'_'+k).value;
+  const body={key:k,name:val('n'),price:val('p'),unit:val('u'),desc:val('d'),icon:val('i'),tag:val('t'),section:val('s')};
   const r=await api('/admin/api/service',{method:'POST',body:JSON.stringify(body)});
-  document.getElementById('sv_'+k).textContent = r.ok?' ✓ saved':' error';
-  if(r.ok){ S.services=(await r.json()).services; setTimeout(()=>document.getElementById('sv_'+k).textContent='',1500); }
+  document.getElementById('sv_'+k).textContent = r.ok?' ✓ saved — live on your site now':' error';
+  if(r.ok){ S.services=(await r.json()).services; setTimeout(()=>document.getElementById('sv_'+k).textContent='',2500); }
+}
+
+// Homepage wording. Labels are plain English — the keys mean nothing to the client.
+const COPY_FIELDS=[
+  ['heroTitle','Headline (first part)',1],
+  ['heroAccent','Headline (highlighted ending)',1],
+  ['heroLead','Opening paragraph',3],
+  ['speakingEyebrow','Speaking section — small label above the heading',1],
+  ['speakingTitle','Speaking section — heading',1],
+  ['speakingLead','Speaking section — intro',3],
+  ['speakingNote','Speaking section — note under the panels',2],
+  ['servicesEyebrow','Pricing section — small label above the heading',1],
+  ['servicesTitle','Pricing section — heading',1],
+  ['servicesLead','Pricing section — intro',3],
+];
+function renderCopy(){
+  const c=S.copy||{};
+  document.getElementById('copy').innerHTML=COPY_FIELDS.map(([k,label,rows])=>`
+    <div style="margin-bottom:14px">
+      <label class="muted">${label}</label>
+      ${rows>1
+        ? `<textarea id="c_${k}" rows="${rows}" style="width:100%;font-family:inherit;border:1.5px solid var(--line);border-radius:9px;padding:.5rem .7rem;font-size:.9rem">${esc(c[k])}</textarea>`
+        : `<input id="c_${k}" value="${esc(c[k])}" style="width:100%">`}
+    </div>`).join('');
+}
+async function saveCopy(){
+  const body={}; COPY_FIELDS.forEach(([k])=>{ body[k]=document.getElementById('c_'+k).value; });
+  const r=await api('/admin/api/copy',{method:'POST',body:JSON.stringify(body)});
+  document.getElementById('cpSaved').textContent = r.ok?' ✓ saved — live on your site now':' error';
+  if(r.ok){ S.copy=(await r.json()).copy; setTimeout(()=>document.getElementById('cpSaved').textContent='',2500); }
 }
 
 function renderTopics(){
@@ -229,7 +283,7 @@ async function loadOutbox(){
 
 function tab(name){
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t.dataset.tab===name));
-  ['bookings','pricing','hours','emails'].forEach(n=>document.getElementById('tab-'+n).classList.toggle('hidden',n!==name));
+  ['bookings','pricing','text','hours','emails'].forEach(n=>document.getElementById('tab-'+n).classList.toggle('hidden',n!==name));
 }
 function esc(s){ return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
