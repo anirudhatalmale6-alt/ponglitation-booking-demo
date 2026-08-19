@@ -175,7 +175,7 @@ function renderServices(){
       <div class="row"><span>$</span><input id="p_${k}" type="number" value="${v.price}" style="width:90px">
         <input id="u_${k}" value="${esc(v.unit)}" style="width:130px" title="e.g. 60 min"></div>
       <label class="muted" style="display:block;margin-top:10px">Description</label>
-      <textarea id="d_${k}" rows="3" style="width:100%;font-family:inherit;border:1.5px solid var(--line);border-radius:9px;padding:.5rem .7rem;font-size:.9rem">${esc(v.desc)}</textarea>
+      <textarea id="d_${k}" rows="4" style="width:100%;font-family:inherit;border:1.5px solid var(--line);border-radius:9px;padding:.5rem .7rem;font-size:.9rem">${esc(v.desc)}</textarea>
       <div class="row" style="margin-top:10px">
         <div><label class="muted">Icon</label><input id="i_${k}" value="${esc(v.icon)}" style="width:60px;text-align:center"></div>
         <div style="flex:1"><label class="muted">Badge</label><input id="t_${k}" value="${esc(v.tag)}" placeholder="none" style="width:100%"></div>
